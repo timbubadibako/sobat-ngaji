@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobat Ngaji - Evaluation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="phone-wrap">
+    <div class="phone">
+      <section class="screen">
+        <div class="safe-top">
+          <div class="screen-title">
+            <h1>Evaluation</h1>
+            <p>Evaluasi awal dari sesi Ad-Dhuha.</p>
+          </div>
+          <span class="badge success">completed</span>
+        </div>
+
+        <section class="section card">
+          <div class="score-panel">
+            <div class="score-ring"><div><strong>82</strong><span>match score</span></div></div>
+            <div>
+              <span class="badge ai">AI Confidence · Medium</span>
+              <h2 style="margin:10px 0 7px;font-size:22px;letter-spacing:-.03em">Bacaan cukup stabil.</h2>
+              <p style="margin:0;color:var(--muted);line-height:1.55">AI masih menemukan bagian yang perlu dicek pada pelafalan ض. Coba ulangi frasa ini dengan tempo lebih pelan.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section highlight-card">
+          <div class="section-head"><h2>Ayah highlight</h2><span>Realtime result</span></div>
+          <p class="arabic">
+            <span class="word read">وَ</span>
+            <span class="word check">الضُّ</span>
+            <span class="word current">حَىٰ</span>
+          </p>
+          <div class="legend-row">
+            <span class="legend"><span class="dot read"></span>Terbaca baik</span>
+            <span class="legend"><span class="dot"></span>Sedang dibaca</span>
+            <span class="legend"><span class="dot check"></span>Perlu dicek</span>
+            <span class="legend"><span class="dot retry"></span>Perlu diulang</span>
+          </div>
+        </section>
+
+        <section class="section ai-card">
+          <div class="ai-row">
+            <div class="ai-icon">AI</div>
+            <div>
+              <div class="ai-label">Recommendation</div>
+              <h3>Ulangi bagian tengah.</h3>
+              <p>Latih transisi ke huruf ض sebanyak 3 kali. Setelah itu lanjutkan ke ayat berikutnya jika suara sudah lebih stabil.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section card">
+          <div class="section-head"><h2>WebSocket result events</h2><span>session_001</span></div>
+          <div class="socket-stack">
+            <div class="socket-event"><span class="led"></span><div><strong>audio.uploaded</strong><span>Recording submitted</span></div><span>done</span></div>
+            <div class="socket-event"><span class="led"></span><div><strong>evaluation.processing</strong><span>AI mencocokkan bacaan</span></div><span>done</span></div>
+            <div class="socket-event"><span class="led"></span><div><strong>evaluation.completed</strong><span>Result available</span></div><span>now</span></div>
+          </div>
+        </section>
+
+        <section class="section" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <a class="btn ghost" href="recording.html">Retry</a>
+          <a class="btn primary" href="insight.html">Next</a>
+        </section>
+      </section>
+
+      <nav class="bottom-nav">
+        <a class="nav-item" href="home.html"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21H5a2 2 0 0 1-2-2z"/><path d="M9 21v-7h6v7"/></svg><span>Home</span></a>
+        <a class="nav-item active" href="practice.html"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v4"/></svg><span>Practice</span></a>
+        <a class="nav-item" href="insight.html"><svg viewBox="0 0 24 24"><path d="M6 20V10"/><path d="M12 20V4"/><path d="M18 20v-7"/></svg><span>Insight</span></a>
+        <a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></a>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>
