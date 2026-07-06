@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobat Ngaji Component Catalog</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(1 0 0);
+      --surface: oklch(0.985 0.006 250);
+      --surface-raised: oklch(1 0 0);
+      --surface-quiet: oklch(0.955 0.018 245);
+      --ink: oklch(0.19 0.035 255);
+      --ink-soft: oklch(0.38 0.035 255);
+      --muted: oklch(0.48 0.028 250);
+      --line: oklch(0.88 0.018 250);
+      --primary: oklch(0.72 0.13 185);
+      --primary-dark: oklch(0.42 0.09 190);
+      --navy: oklch(0.25 0.07 255);
+      --navy-2: oklch(0.38 0.08 245);
+      --cyan: oklch(0.76 0.12 195);
+      --cyan-soft: oklch(0.93 0.04 190);
+      --recite: oklch(0.82 0.11 178);
+      --recite-soft: oklch(0.94 0.055 178);
+      --recite-line: oklch(0.69 0.12 178);
+      --success: oklch(0.52 0.14 150);
+      --success-soft: oklch(0.92 0.05 150);
+      --warning: oklch(0.70 0.17 72);
+      --warning-soft: oklch(0.94 0.06 78);
+      --danger: oklch(0.55 0.19 25);
+      --danger-soft: oklch(0.93 0.055 25);
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --font: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      --arabic: "Noto Naskh Arabic", "Amiri", "Scheherazade New", serif;
+      --shadow-tight: 0 4px 8px oklch(0.19 0.035 255 / .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 4%, oklch(0.76 0.12 195 / .12), transparent 24rem),
+        radial-gradient(circle at 86% 0%, oklch(0.72 0.13 185 / .11), transparent 22rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin-top: 0;
+      text-wrap: pretty;
+    }
+
+    .label {
+      margin: 0 0 10px;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin-bottom: 12px;
+      font-size: 4.25rem;
+      line-height: .95;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .note {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 17px;
+    }
+
+    .note span {
+      color: oklch(0.88 0.025 250);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .catalog {
+      display: grid;
+      gap: 16px;
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface-raised);
+    }
+
+    .section-intro h2 {
+      margin-bottom: 8px;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-intro p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .samples {
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .specimen {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .specimen.line {
+      border: 1px solid var(--line);
+      background: var(--surface-raised);
+    }
+
+    .meta {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .display {
+      margin-bottom: 4px;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .h1-sample {
+      margin-bottom: 5px;
+      font-size: 32px;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .h2-sample {
+      margin-bottom: 5px;
+      font-size: 24px;
+      line-height: 1.14;
+      letter-spacing: -0.02em;
+    }
+
+    .h3-sample {
+      margin-bottom: 5px;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .body-sample {
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .caption-sample {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .arabic-sample {
+      margin: 0;
+      color: var(--navy);
+      font-family: var(--arabic);
+      font-size: 34px;
+      line-height: 1.9;
+      direction: rtl;
+    }
+
+    .btn-row,
+    .chip-row,
+    .state-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--primary);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      background: var(--surface-quiet);
+      color: var(--navy);
+    }
+
+    .button.dark {
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .button.danger {
+      background: var(--danger);
+      color: var(--bg);
+    }
+
+    .button:disabled {
+      cursor: not-allowed;
+      background: var(--surface-quiet);
+      color: var(--muted);
+    }
+
+    .icon-button {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 0;
+      border-radius: 13px;
+      background: var(--surface-quiet);
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .card {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-tight);
+    }
+
+    .card.bordered {
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .card.dark {
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .card h3 {
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .card.dark p {
+      color: oklch(0.88 0.025 250);
+    }
+
+    .metric {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      min-height: 31px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--cyan-soft);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chip {
+      display: inline-flex;
+      min-height: 33px;
+      align-items: center;
+      padding: 0 11px;
+      border-radius: 999px;
+      background: var(--surface-quiet);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chip.active {
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .progress {
+      overflow: hidden;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--surface-quiet);
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .step {
+      height: 7px;
+      border-radius: 999px;
+      background: var(--surface-quiet);
+    }
+
+    .step.done,
+    .step.active {
+      background: var(--cyan);
+    }
+
+    .phrase {
+      margin: 0;
+      color: var(--navy);
+      font-family: var(--arabic);
+      font-size: 33px;
+      line-height: 1.9;
+      direction: rtl;
+    }
+
+    .phrase-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-tight);
+      text-align: center;
+    }
+
+    .phrase .current {
+      position: relative;
+      padding: 0 6px 5px;
+      border-radius: 12px;
+      background: var(--recite-soft);
+      color: var(--navy);
+    }
+
+    .phrase .current::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 2px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--recite-line);
+    }
+
+    .phrase .mark {
+      padding: 0 5px 4px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, var(--recite-soft), oklch(0.9 0.07 178));
+      box-shadow:
+        inset 0 -3px 0 var(--recite-line),
+        0 0 0 1px oklch(0.69 0.12 178 / .18);
+      color: var(--navy);
+    }
+
+    .state-pill {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--bg);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .state-pill.success { background: var(--success); }
+    .state-pill.warning { background: var(--warning); }
+    .state-pill.danger { background: var(--danger); }
+    .state-pill.info { background: var(--cyan); color: var(--navy); }
+
+    .feedback {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border-radius: var(--radius-md);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-tight);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .feedback.success { background: var(--success-soft); }
+    .feedback.warning { background: var(--warning-soft); }
+    .feedback.danger { background: var(--danger-soft); }
+
+    .feedback-icon {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--cyan-soft);
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .feedback-icon.success,
+    .feedback-icon.warning,
+    .feedback-icon.danger {
+      color: var(--bg);
+    }
+
+    .feedback-icon.success { background: var(--success); }
+    .feedback-icon.warning { background: var(--warning); }
+    .feedback-icon.danger { background: var(--danger); }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--navy);
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .input {
+      min-height: 42px;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-raised);
+      color: var(--ink);
+      padding: 0 12px;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px oklch(0.76 0.12 195 / .18);
+    }
+
+    .input.error {
+      border-color: var(--danger);
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .score {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--surface-raised) 0 55%, transparent 56%),
+        conic-gradient(var(--cyan) 0 82%, var(--surface-quiet) 82% 100%);
+    }
+
+    .score strong {
+      display: block;
+      color: var(--navy);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .score span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .record {
+      display: grid;
+      width: 98px;
+      height: 98px;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--danger) 0 26%, transparent 27%),
+        radial-gradient(circle, oklch(0.55 0.19 25 / .16) 0 49%, transparent 50%),
+        var(--surface-raised);
+      box-shadow: 0 0 0 8px var(--surface-quiet);
+    }
+
+    .record span {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      background: var(--bg);
+    }
+
+    .wave {
+      display: flex;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .wave i {
+      width: 5px;
+      border-radius: 999px;
+      background: var(--cyan);
+    }
+
+    .skeleton {
+      display: grid;
+      gap: 8px;
+    }
+
+    .skeleton span {
+      display: block;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--surface-quiet);
+    }
+
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 7px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-tight);
+    }
+
+    .nav-item {
+      display: grid;
+      min-height: 52px;
+      place-items: center;
+      border-radius: 13px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .nav-item.active {
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .dark-strip {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      background: var(--navy);
+      color: var(--bg);
+    }
+
+    .dark-strip p {
+      margin: 0;
+      color: oklch(0.88 0.025 250);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .record {
+        animation: pulse 1.7s ease-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 8px var(--surface-quiet); }
+        50% { box-shadow: 0 0 0 14px oklch(0.55 0.19 25 / .12); }
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section,
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .page {
+        width: min(100% - 18px, 1240px);
+        padding-top: 18px;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="label">Sobat Ngaji component catalog</p>
+        <h1>Reusable mobile components before Flutter implementation.</h1>
+        <p>This catalog breaks the current direction into actual building blocks: typography, buttons, cards, selectors, progress, recitation highlights, feedback states, forms, loading, recording, and navigation.</p>
+      </div>
+      <aside class="note">
+        <strong>Design system target</strong>
+        <span>Cool aqua/ink identity, readable Arabic, semantic colors for feedback, and components that can translate cleanly into Flutter widgets.</span>
+      </aside>
+    </header>
+
+    <section class="catalog">
+      <article class="section">
+        <div class="section-intro">
+          <h2>Typeface</h2>
+          <p>Compact product scale. No oversized marketing type inside app screens. Arabic receives its own visual priority.</p>
+        </div>
+        <div class="samples">
+          <div class="grid-2">
+            <div class="specimen">
+              <span class="meta">Display / showcase only</span>
+              <div class="display">Cool AI clarity</div>
+              <p class="caption-sample">Used for design docs, not normal mobile screens.</p>
+            </div>
+            <div class="specimen">
+              <span class="meta">Arabic specimen</span>
+              <p class="arabic-sample">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="specimen line"><span class="meta">H1 / screen title</span><h2 class="h1-sample">Latihan hari ini</h2><p class="caption-sample">28-32px, tight but readable.</p></div>
+            <div class="specimen line"><span class="meta">H2 / section</span><h3 class="h2-sample">Daily Qira</h3><p class="caption-sample">22-24px for major areas.</p></div>
+            <div class="specimen line"><span class="meta">H3 / card title</span><h4 class="h3-sample">Ulangi bagian tengah</h4><p class="caption-sample">16-18px for components.</p></div>
+          </div>
+          <div class="grid-2">
+            <div class="specimen line"><span class="meta">Body</span><p class="body-sample">Dengarkan referensi, rekam bacaanmu, lalu lihat evaluasi awal untuk frasa ini.</p></div>
+            <div class="specimen line"><span class="meta">Caption / helper</span><p class="caption-sample">Mencocokkan bacaan dengan referensi. Ini evaluasi awal, bukan penilaian mutlak.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Buttons</h2>
+          <p>Primary action is aqua. Navy is structural. Red is reserved for destructive or critical correction states.</p>
+        </div>
+        <div class="samples">
+          <div class="specimen">
+            <span class="meta">Button variants</span>
+            <div class="btn-row">
+              <button class="button">Mulai Latihan</button>
+              <button class="button dark">Next Frasa</button>
+              <button class="button secondary">Retry Frasa</button>
+              <button class="button danger">Hapus Rekaman</button>
+              <button class="button" disabled>Processing</button>
+              <button class="icon-button">⌕</button>
+              <button class="icon-button">?</button>
+            </div>
+          </div>
+          <div class="dark-strip">
+            <div class="btn-row">
+              <button class="button">Record</button>
+              <button class="button secondary">Play Reference</button>
+            </div>
+            <p>On dark surfaces, keep actions simple and avoid adding extra decorative button styles.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Cards</h2>
+          <p>Use cards for repeated records, key tasks, and result blocks. Avoid nested decorative cards.</p>
+        </div>
+        <div class="samples grid-3">
+          <div class="card">
+            <h3>Daily Qira</h3>
+            <p>Latihan frasa pendek dengan referensi audio dan evaluasi awal.</p>
+          </div>
+          <div class="card bordered">
+            <div class="metric">
+              <div><h3>Continue Practice</h3><p>QS Al-Fatihah: 2 · frasa 1 dari 3</p></div>
+              <span class="badge">68%</span>
+            </div>
+          </div>
+          <div class="card dark">
+            <h3>AI Processing</h3>
+            <p>Mencocokkan bacaan dengan referensi frasa.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Selectors</h2>
+          <p>Chips carry context: surah, ayat, frasa, current state. They should not look like primary buttons.</p>
+        </div>
+        <div class="samples">
+          <div class="specimen">
+            <span class="meta">Practice selectors</span>
+            <div class="chip-row">
+              <span class="chip active">Al-Fatihah</span>
+              <span class="chip">Ayat 1</span>
+              <span class="chip">Frasa 1</span>
+              <span class="chip">Listen</span>
+              <span class="chip">Record</span>
+            </div>
+          </div>
+          <div class="specimen">
+            <span class="meta">State chips</span>
+            <div class="state-row">
+              <span class="state-pill info">Info</span>
+              <span class="state-pill success">Benar</span>
+              <span class="state-pill warning">Perlu cek</span>
+              <span class="state-pill danger">Salah</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Progress</h2>
+          <p>Use progress for practice completion, weekly learning, and flow stage. Keep it structural and quiet.</p>
+        </div>
+        <div class="samples">
+          <div class="grid-2">
+            <div class="specimen">
+              <span class="meta">Linear progress</span>
+              <div class="progress"><span style="width:68%"></span></div>
+            </div>
+            <div class="specimen">
+              <span class="meta">Practice stepper</span>
+              <div class="stepper"><span class="step done"></span><span class="step done"></span><span class="step active"></span><span class="step"></span></div>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="card bordered"><h3>82</h3><p>Skor terakhir</p></div>
+            <div class="card bordered"><h3>76</h3><p>Rata-rata minggu ini</p></div>
+            <div class="card bordered"><h3>3</h3><p>Frasa perlu diulang</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Recitation</h2>
+          <p>Current phrase highlight is aqua underline. Result attention is semantic and should not look like a button.</p>
+        </div>
+        <div class="samples grid-2">
+          <div class="phrase-card">
+            <span class="meta">Current phrase</span>
+            <p class="phrase">بِسْمِ اللّٰهِ <span class="current">الرَّحْمٰنِ</span> الرَّحِيْمِ</p>
+          </div>
+          <div class="phrase-card">
+            <span class="meta">Result focus</span>
+            <p class="phrase">بِسْمِ اللّٰهِ <span class="mark">الرَّحْمٰنِ</span> الرَّحِيْمِ</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Feedback</h2>
+          <p>Blue is brand and AI. Correctness uses distinct semantic colors so users can scan result states fast.</p>
+        </div>
+        <div class="samples grid-3">
+          <div class="feedback success"><span class="feedback-icon success">✓</span><div><strong>Awal frasa stabil</strong>Bagian pembuka sudah cukup dekat dengan referensi.</div></div>
+          <div class="feedback warning"><span class="feedback-icon warning">!</span><div><strong>Perlu cek tempo</strong>Bacaan sedikit lebih cepat dari referensi.</div></div>
+          <div class="feedback danger"><span class="feedback-icon danger">!</span><div><strong>Ulangi bagian tengah</strong>Pengucapan terdeteksi kurang dekat dengan referensi.</div></div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Forms</h2>
+          <p>Inputs are calm and familiar. Error states explain the fix, not only the failure.</p>
+        </div>
+        <div class="samples grid-3">
+          <div class="field"><label>Target harian</label><input class="input" value="1 frasa per hari"><span class="help">Dipakai untuk pengingat latihan.</span></div>
+          <div class="field"><label>Nama pengguna</label><input class="input" value="Aisyah"><span class="help">Tampil di Home dan Profile.</span></div>
+          <div class="field"><label>Audio recording</label><input class="input error" value="Audio terlalu pelan"><span class="help">Coba rekam lebih dekat dengan mikrofon.</span></div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Loading</h2>
+          <p>Skeletons for content loading. Waveforms for active audio/ASR states.</p>
+        </div>
+        <div class="samples grid-3">
+          <div class="specimen">
+            <span class="meta">Skeleton card</span>
+            <div class="skeleton"><span style="width:92%"></span><span style="width:74%"></span><span style="width:54%"></span></div>
+          </div>
+          <div class="specimen">
+            <span class="meta">Waveform</span>
+            <div class="wave"><i style="height:12px"></i><i style="height:31px"></i><i style="height:21px"></i><i style="height:39px"></i><i style="height:18px"></i><i style="height:28px"></i></div>
+          </div>
+          <div class="specimen">
+            <span class="meta">Processing copy</span>
+            <p class="body-sample">Mencocokkan bacaan dengan referensi frasa. Ini evaluasi awal.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Audio & Result</h2>
+          <p>Recording is visually distinct from semantic error. Result score stays measurable, not judgemental.</p>
+        </div>
+        <div class="samples grid-3">
+          <div class="specimen" style="display:grid;place-items:center;gap:14px">
+            <button class="record" aria-label="Recording"><span></span></button>
+            <p class="caption-sample">Merekam bacaan · 00:08</p>
+          </div>
+          <div class="specimen" style="display:grid;place-items:center">
+            <div class="score"><div><strong>82</strong><span>kecocokan</span></div></div>
+          </div>
+          <div class="card bordered">
+            <h3>Result actions</h3>
+            <p style="margin-bottom:12px">Retry should be secondary. Next remains primary.</p>
+            <div class="btn-row"><button class="button secondary">Retry</button><button class="button">Next</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <div class="section-intro">
+          <h2>Navigation</h2>
+          <p>Bottom nav is stable and familiar. Active state uses navy, not cyan, so it reads as structure.</p>
+        </div>
+        <div class="samples">
+          <nav class="bottom-nav">
+            <div class="nav-item active"><span>⌂</span>Home</div>
+            <div class="nav-item"><span>◉</span>Practice</div>
+            <div class="nav-item"><span>▥</span>Insight</div>
+            <div class="nav-item"><span>♙</span>Profile</div>
+          </nav>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
