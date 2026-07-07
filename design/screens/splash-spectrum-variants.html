@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobat Ngaji - Spectrum Splash Transition</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7fafc;
+      --surface: #ffffff;
+      --surface-muted: #eef4f7;
+      --ink: #0b1220;
+      --navy: #101a2e;
+      --navy-2: #1a2a46;
+      --muted: #6b7a8c;
+      --line: #dbe6ed;
+      --aqua: #32d5c8;
+      --cyan: #53c7f0;
+      --teal: #17b8a6;
+      --shadow: 0 24px 70px rgba(11, 18, 32, .18);
+      --font: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      --arabic: "Noto Naskh Arabic", "Amiri", "Scheherazade New", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(83, 199, 240, .16), transparent 26rem),
+        radial-gradient(circle at 86% 12%, rgba(50, 213, 200, .16), transparent 24rem),
+        linear-gradient(180deg, #fbfdff, var(--bg));
+      font-family: var(--font);
+      letter-spacing: 0;
+    }
+
+    .stage {
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+    }
+
+    .caption {
+      max-width: 430px;
+      text-align: center;
+    }
+
+    .caption h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+
+    .caption p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .phone {
+      position: relative;
+      width: min(390px, calc(100vw - 28px));
+      aspect-ratio: 390 / 844;
+      overflow: hidden;
+      border: 10px solid white;
+      border-radius: 34px;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .phone.replay * {
+      animation: none !important;
+    }
+
+    .splash,
+    .login {
+      position: absolute;
+      inset: 0;
+    }
+
+    .splash {
+      z-index: 3;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 22px 20px 24px;
+      color: white;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(83, 199, 240, .18), transparent 12rem),
+        radial-gradient(circle at 82% 10%, rgba(50, 213, 200, .18), transparent 11rem),
+        linear-gradient(145deg, var(--navy), var(--navy-2));
+      animation: splash-exit 4.6s cubic-bezier(.22, 1, .36, 1) forwards;
+    }
+
+    .splash::after {
+      content: "ن";
+      position: absolute;
+      right: -6px;
+      top: 58px;
+      color: rgba(255, 255, 255, .045);
+      font-family: var(--arabic);
+      font-size: 132px;
+      line-height: 1;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, .74);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .battery {
+      width: 26px;
+      height: 12px;
+      border: 1.5px solid rgba(255, 255, 255, .62);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .battery::before {
+      content: "";
+      position: absolute;
+      inset: 2px 7px 2px 2px;
+      border-radius: 2px;
+      background: var(--aqua);
+    }
+
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 3px;
+      width: 2px;
+      height: 5px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, .62);
+    }
+
+    .spectrum-scene {
+      position: relative;
+      display: grid;
+      place-items: center;
+      align-self: center;
+      justify-self: center;
+      width: 236px;
+      height: 74px;
+      animation: spectrum-zoom 4.6s cubic-bezier(.76, 0, .24, 1) forwards;
+      transform-origin: center;
+    }
+
+    .waveform {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(24, 1fr);
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      height: 74px;
+    }
+
+    .waveform::before {
+      content: "";
+      position: absolute;
+      inset: 16px 8px;
+      z-index: -1;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .24);
+      filter: blur(24px);
+      opacity: .82;
+      animation: halo-pulse 1.8s ease-in-out infinite;
+    }
+
+    .waveform i {
+      display: block;
+      height: var(--h);
+      min-height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow:
+        0 0 15px rgba(255, 255, 255, .32),
+        0 0 34px rgba(83, 199, 240, .2);
+      animation: voice-bar 1.08s ease-in-out infinite;
+      animation-delay: var(--d);
+      transform-origin: center;
+    }
+
+    .brand-lockup {
+      z-index: 1;
+      align-self: end;
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+      text-align: center;
+      animation: lockup-fade 4.6s ease forwards;
+    }
+
+    .brand-lockup strong {
+      font-size: 26px;
+      line-height: 1;
+      letter-spacing: -.025em;
+    }
+
+    .brand-lockup span {
+      color: rgba(255, 255, 255, .64);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .login {
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 22px 20px 24px;
+      background:
+        radial-gradient(circle at 50% -6%, rgba(255, 255, 255, .2), transparent 14rem),
+        radial-gradient(circle at 18% 18%, rgba(83, 199, 240, .28), transparent 15rem),
+        linear-gradient(155deg, var(--navy) 0%, #0f2638 48%, #117d78 100%);
+      opacity: 0;
+      animation: login-enter 4.6s cubic-bezier(.22, 1, .36, 1) forwards;
+    }
+
+    .login-wave {
+      position: absolute;
+      left: 50%;
+      top: 18%;
+      z-index: 0;
+      width: 620px;
+      height: 360px;
+      display: grid;
+      grid-template-columns: repeat(24, 1fr);
+      align-items: center;
+      gap: 12px;
+      opacity: .2;
+      filter: blur(.2px);
+      transform: translateX(-50%) rotate(-8deg);
+      pointer-events: none;
+      animation: login-wave-float 6s ease-in-out infinite;
+    }
+
+    .login-wave i {
+      display: block;
+      height: var(--h);
+      min-height: 82px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .92);
+      box-shadow: 0 0 34px rgba(255, 255, 255, .18);
+      animation: voice-bar 1.24s ease-in-out infinite;
+      animation-delay: var(--d);
+      transform-origin: center;
+    }
+
+    .login .status {
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, .7);
+    }
+
+    .login .battery {
+      border-color: rgba(255, 255, 255, .54);
+    }
+
+    .login .battery::after {
+      background: rgba(255, 255, 255, .54);
+    }
+
+    .login-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: end;
+      gap: 22px;
+      padding-bottom: 8px;
+    }
+
+    .logo {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--aqua), var(--cyan));
+      font-family: var(--arabic);
+      font-size: 36px;
+      font-weight: 900;
+      box-shadow: 0 14px 34px rgba(50, 213, 200, .2);
+    }
+
+    .intro h2 {
+      margin: 0;
+      color: white;
+      font-size: 32px;
+      line-height: 1.12;
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+
+    .intro p {
+      margin: 10px 0 0;
+      color: rgba(255, 255, 255, .7);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field span {
+      color: rgba(255, 255, 255, .72);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .field input {
+      width: 100%;
+      height: 50px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 18px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .94);
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(50, 213, 200, .14);
+    }
+
+    .primary {
+      height: 52px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--aqua), var(--cyan));
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .secondary {
+      margin: 2px 0 0;
+      color: rgba(255, 255, 255, .68);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .secondary a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .replay-btn {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: white;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    @keyframes spectrum-zoom {
+      0% { transform: scale(.86); opacity: 0; }
+      12% { transform: scale(1); opacity: 1; }
+      44% { transform: scale(1); opacity: 1; }
+      76% { transform: scale(11.5); opacity: 1; }
+      100% { transform: scale(13); opacity: 0; }
+    }
+
+    @keyframes splash-exit {
+      0%, 68% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes login-enter {
+      0%, 58% { opacity: 0; transform: scale(1.015); }
+      76%, 100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes lockup-fade {
+      0%, 42% { opacity: 1; transform: translateY(0); }
+      62%, 100% { opacity: 0; transform: translateY(10px); }
+    }
+
+    @keyframes halo-pulse {
+      0%, 100% { opacity: .48; transform: scale(.96); }
+      50% { opacity: .9; transform: scale(1.04); }
+    }
+
+    @keyframes login-wave-float {
+      0%, 100% { transform: translateX(-50%) rotate(-8deg) translateY(0); }
+      50% { transform: translateX(-50%) rotate(-8deg) translateY(10px); }
+    }
+
+    @keyframes voice-bar {
+      0%, 100% { transform: scaleY(.62); opacity: .62; }
+      50% { transform: scaleY(1.18); opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .caption { display: none; }
+      .phone {
+        width: min(100vw - 20px, 390px);
+        border-width: 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+
+      .splash { opacity: 0; visibility: hidden; }
+      .login { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="caption">
+      <h1>Spectrum splash to login</h1>
+      <p>Waveform putih muncul di tengah, membesar memenuhi layar, lalu menetap sebagai background panel login.</p>
+    </div>
+
+    <section class="phone" id="phone" aria-label="Sobat Ngaji splash transition preview">
+      <div class="login" aria-label="Login screen">
+        <div class="login-wave" aria-hidden="true">
+          <i style="--h:150px;--d:-.10s"></i>
+          <i style="--h:240px;--d:-.46s"></i>
+          <i style="--h:180px;--d:-.22s"></i>
+          <i style="--h:320px;--d:-.70s"></i>
+          <i style="--h:210px;--d:-.34s"></i>
+          <i style="--h:350px;--d:-.86s"></i>
+          <i style="--h:170px;--d:-.14s"></i>
+          <i style="--h:280px;--d:-.58s"></i>
+          <i style="--h:340px;--d:-.40s"></i>
+          <i style="--h:200px;--d:-.92s"></i>
+          <i style="--h:300px;--d:-.26s"></i>
+          <i style="--h:165px;--d:-.76s"></i>
+          <i style="--h:330px;--d:-.50s"></i>
+          <i style="--h:190px;--d:-.06s"></i>
+          <i style="--h:360px;--d:-.62s"></i>
+          <i style="--h:220px;--d:-.32s"></i>
+          <i style="--h:155px;--d:-.82s"></i>
+          <i style="--h:290px;--d:-.52s"></i>
+          <i style="--h:205px;--d:-.18s"></i>
+          <i style="--h:340px;--d:-.68s"></i>
+          <i style="--h:185px;--d:-.38s"></i>
+          <i style="--h:260px;--d:-.88s"></i>
+          <i style="--h:140px;--d:-.28s"></i>
+          <i style="--h:230px;--d:-.78s"></i>
+        </div>
+        <div class="status"><span>9:41</span><span class="battery"></span></div>
+        <div class="login-content">
+          <div class="logo">ن</div>
+          <div class="intro">
+            <h2>Masuk ke Sobat Ngaji</h2>
+            <p>Lanjutkan latihan tilawah dan lihat progres bacaan terakhir.</p>
+          </div>
+          <form class="form">
+            <label class="field">
+              <span>Email</span>
+              <input type="email" placeholder="nama@email.com">
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input type="password" placeholder="••••••••">
+            </label>
+            <button class="primary" type="button">Masuk</button>
+            <p class="secondary">Belum punya akun? <a href="#">Daftar</a></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="splash" aria-label="Splash animation">
+        <div class="status"><span>9:41</span><span class="battery"></span></div>
+        <div class="spectrum-scene" aria-hidden="true">
+          <div class="waveform">
+            <i style="--h:15px;--d:-.10s"></i>
+            <i style="--h:27px;--d:-.46s"></i>
+            <i style="--h:19px;--d:-.22s"></i>
+            <i style="--h:38px;--d:-.70s"></i>
+            <i style="--h:24px;--d:-.34s"></i>
+            <i style="--h:44px;--d:-.86s"></i>
+            <i style="--h:17px;--d:-.14s"></i>
+            <i style="--h:31px;--d:-.58s"></i>
+            <i style="--h:42px;--d:-.40s"></i>
+            <i style="--h:22px;--d:-.92s"></i>
+            <i style="--h:35px;--d:-.26s"></i>
+            <i style="--h:18px;--d:-.76s"></i>
+            <i style="--h:39px;--d:-.50s"></i>
+            <i style="--h:21px;--d:-.06s"></i>
+            <i style="--h:45px;--d:-.62s"></i>
+            <i style="--h:25px;--d:-.32s"></i>
+            <i style="--h:16px;--d:-.82s"></i>
+            <i style="--h:34px;--d:-.52s"></i>
+            <i style="--h:23px;--d:-.18s"></i>
+            <i style="--h:40px;--d:-.68s"></i>
+            <i style="--h:20px;--d:-.38s"></i>
+            <i style="--h:30px;--d:-.88s"></i>
+            <i style="--h:14px;--d:-.28s"></i>
+            <i style="--h:26px;--d:-.78s"></i>
+          </div>
+        </div>
+        <div class="brand-lockup">
+          <strong>Sobat Ngaji</strong>
+          <span>Mempersiapkan latihan...</span>
+        </div>
+      </div>
+    </section>
+
+    <button class="replay-btn" type="button" id="replay">Replay transition</button>
+  </main>
+
+  <script>
+    const phone = document.getElementById('phone');
+    const replay = document.getElementById('replay');
+
+    replay.addEventListener('click', () => {
+      phone.classList.add('replay');
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          phone.classList.remove('replay');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

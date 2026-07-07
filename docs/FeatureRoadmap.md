@@ -1,100 +1,277 @@
 # Feature Roadmap
 
 ## Sprint 1: Authentication
+Implement Feature #1: Authentication
+
 Requirement:
-- User dapat login, signup, logout, dan restore session.
+- User can sign up.
+- User can sign in.
+- User can logout.
+- App can restore session on startup.
 
 Output:
-- Auth feature dengan repository, provider, screen, dan route.
+- Auth repository.
+- Auth provider/controller.
+- Login screen.
+- Signup screen.
+- Session restore flow.
+- GoRouter auth redirect.
 
 Acceptance Criteria:
-- App dapat menentukan user authenticated atau unauthenticated.
-- UI tidak memanggil API auth langsung.
-- Session restore berjalan saat app start.
+- App can determine authenticated or unauthenticated state.
+- UI does not call API directly.
+- Session restore works when app starts.
+- Loading, error, and success states are handled.
+- Flutter analyze should pass.
+
+Constraints:
+- Follow all Sobat Mengaji docs.
+- Do not modify unrelated features.
+- Use mock API if backend is unavailable.
 
 ## Sprint 2: Home
+Implement Feature #2: Home
+
 Requirement:
-- Home menampilkan Daily Qira sebagai hero, AI greeting, dan weekly snapshot.
+- Home displays Daily Qira as the main hero entry point.
+- Home displays personal AI greeting.
+- Home displays weekly snapshot.
+- Home displays continue practice and AI recommendation preview.
 
 Output:
-- Home feature dengan DailyQiraHero dan AI insight preview.
+- Home feature.
+- DailyQiraHero widget.
+- AI greeting component.
+- Weekly snapshot component.
+- Continue practice card.
+- AI recommendation preview.
+- Home controller/provider.
+- Home repository with mock data if backend is unavailable.
 
 Acceptance Criteria:
-- Daily Qira menjadi elemen visual utama.
-- Bottom navigation aktif pada Home.
-- Data berasal dari provider, bukan hardcoded langsung di widget final.
+- Daily Qira is the strongest visual element on the first viewport.
+- Bottom navigation active state works on Home.
+- Data comes from provider/repository, not hardcoded directly in final widgets.
+- UI follows DesignGuideline and UIGuideline.
+- Loading, empty, error, and success states are handled.
+- Flutter analyze should pass.
+
+Constraints:
+- Do not create Daily Qira as a navbar item.
+- Main navigation remains Home, Practice, Insight, Profile.
+- Do not modify unrelated features.
 
 ## Sprint 3: Practice
+Implement Feature #3: Practice
+
 Requirement:
-- User dapat memilih materi, memutar reference audio, dan masuk recording flow.
+- User can view practice items.
+- User can search or browse surah/ayah practice materials.
+- User can open practice detail.
+- User can play reference audio.
+- User can enter recording flow from practice detail.
 
 Output:
-- Practice list, practice detail, audio reference controls.
+- Practice list screen.
+- Practice detail screen.
+- Practice item model.
+- Practice repository.
+- Practice controller/provider.
+- Reference audio service abstraction.
+- Surah/Ayah card components.
+- Route integration through GoRouter.
 
 Acceptance Criteria:
-- Audio service terpisah dari UI.
-- Practice item berasal dari repository.
-- State loading, empty, dan error tersedia.
+- Practice item data comes from repository.
+- Audio service is separated from UI.
+- UI does not call API directly.
+- Practice detail shows Arabic text clearly.
+- Reference audio control is close to Arabic text.
+- Loading, empty, error, and success states exist.
+- Flutter analyze should pass.
+
+Constraints:
+- Follow feature-first architecture.
+- Do not implement recording logic yet except navigation entry point.
+- Do not modify unrelated features.
 
 ## Sprint 4: Realtime Recording
+Implement Feature #4: Realtime Recording
+
 Requirement:
-- User dapat merekam bacaan dengan visual waveform dan state recording berbasis WebSocket event.
+- User can request microphone permission.
+- User can start recording.
+- User can see recording duration.
+- User can see waveform or visual audio feedback.
+- User can stop and submit recording.
+- Recording lifecycle uses WebSocket event flow or mock WebSocket adapter.
 
 Output:
-- Recording feature/service.
-- WebSocket realtime service.
-- Mock WebSocket adapter untuk prototype jika backend belum siap.
+- Recording feature.
+- Recording screen or recording panel.
+- Audio recorder service abstraction.
+- Microphone permission handling.
+- Realtime WebSocket service interface.
+- Mock WebSocket adapter if backend is unavailable.
+- Recording controller/provider.
+- Recording state model.
+- Recording UI components.
 
 Acceptance Criteria:
-- Permission microphone ditangani.
-- UI menampilkan recording duration.
-- Recording lifecycle tidak bocor ke screen lain.
-- Widget tidak subscribe WebSocket langsung.
-- Realtime event masuk melalui service, repository, lalu controller.
+- Permission microphone is handled clearly.
+- UI shows recording duration.
+- Recording state is explicit: idle, permissionRequired, recording, paused, uploading, processing, completed, failed.
+- WebSocket events flow through service → repository → controller → UI.
+- Widgets do not subscribe to WebSocket directly.
+- User can retry after failed state.
+- Flutter analyze should pass.
+
+Constraints:
+- Do not use polling as default realtime architecture.
+- Do not put recorder logic inside widget.
+- Do not implement AI evaluation result UI yet unless required as placeholder.
+- Do not modify unrelated features.
 
 ## Sprint 5: AI Evaluation
+Implement Feature #5: AI Evaluation
+
 Requirement:
-- Recording diproses menjadi evaluation result dengan progress realtime melalui WebSocket.
+- Submitted recording can be processed into an evaluation result.
+- Evaluation progress is received through WebSocket events.
+- User can see score, confidence, highlight, summary, and recommendation.
+- User can retry or continue after result.
 
 Output:
-- Evaluation repository, mock/real evaluation service, result UI.
+- Evaluation repository.
+- Evaluation service interface.
+- Mock evaluation service if backend is unavailable.
+- Evaluation result model.
+- Highlight segment model.
+- Letter insight model.
+- Evaluation controller/provider.
+- Evaluation result screen/components.
+- Score card.
+- Highlighted Arabic text component.
+- AI feedback card.
+- Retry and continue actions.
 
 Acceptance Criteria:
-- Result menampilkan score, confidence, highlight, summary, dan recommendation.
-- Copy menggunakan istilah evaluasi awal.
-- Failed state dapat retry.
-- Processing/completed/failed state diterima melalui event contract.
+- Result shows matchScore.
+- Result shows confidenceLevel.
+- Result shows summary and recommendation.
+- Result shows highlight segments with semantic status.
+- Copy uses “evaluasi awal”, “AI menemukan…”, “perlu dicek”, and “coba ulangi bagian ini”.
+- Copy does not use absolute AI claims.
+- Failed state can retry.
+- Processing/completed/failed states follow WebSocket event contract.
+- Flutter analyze should pass.
+
+Constraints:
+- MVP does not claim full tajwid correction.
+- MVP does not claim real-time per-letter correction unless proven.
+- Do not modify unrelated features.
 
 ## Sprint 6: Insight
+Implement Feature #6: Insight
+
 Requirement:
-- User melihat tren latihan dan letter mastery.
+- User can see weekly score.
+- User can see weekly trend.
+- User can see letter mastery.
+- User can see smart suggestion.
+- Insight should answer what the user needs to practice next.
 
 Output:
-- Insight screen, weekly report, letter accuracy visualization.
+- Insight screen.
+- Insight repository.
+- Insight controller/provider.
+- Weekly report model.
+- Letter mastery model.
+- Weekly trend chart component.
+- Letter accuracy visualization.
+- AI insight narrative card.
+- Smart suggestion card.
 
 Acceptance Criteria:
-- User dapat melihat huruf yang perlu dilatih.
-- Data visualization mengikuti design guideline.
+- User can clearly see which letter or segment needs more practice.
+- Visualizations are meaningful, not decorative only.
+- AI insight feels personal and helpful.
+- Data comes from repository/provider.
+- Loading, empty, error, and success states exist.
+- UI follows DesignGuideline and UIGuideline.
+- Flutter analyze should pass.
+
+Constraints:
+- Do not make Insight a generic dashboard.
+- Do not overload screen with too many numbers.
+- Do not modify unrelated features.
 
 ## Sprint 7: Profile
+Implement Feature #7: Profile
+
 Requirement:
-- User melihat profil, preferensi, dan ringkasan latihan.
+- User can see profile identity.
+- User can see learning summary.
+- User can see preferences.
+- User can logout.
+- Profile should remain simple and not become a random settings dump.
 
 Output:
-- Profile feature.
+- Profile screen.
+- Profile repository if needed.
+- Profile controller/provider.
+- Learning summary component.
+- Preferences component.
+- Logout action.
+- Profile route and bottom nav integration.
 
 Acceptance Criteria:
-- Preferences tersimpan lokal atau remote sesuai backend readiness.
-- Logout tersedia jika auth aktif.
+- Profile shows user identity.
+- Profile shows simple learning summary.
+- Preferences can be stored locally or remotely depending on backend readiness.
+- Logout works if auth is active.
+- UI follows DesignGuideline.
+- Flutter analyze should pass.
+
+Constraints:
+- Do not add unrelated features.
+- Do not move Insight features into Profile.
+- Profile must remain lightweight.
 
 ## Sprint 8: Optimization
+Implement Feature #8: Optimization, Testing, and Polish
+
 Requirement:
-- Stabilkan performance, testing, accessibility, dan polish.
+- Stabilize performance.
+- Improve accessibility.
+- Add tests for main flows.
+- Polish loading, empty, error, and success states.
+- Ensure UI consistency across Home, Practice, Recording, Evaluation, Insight, and Profile.
 
 Output:
-- Test coverage flow utama, reduced motion, cache handling, error polish.
+- Unit tests for key controllers/repositories.
+- Widget tests for important UI states.
+- Manual QA checklist.
+- Accessibility improvements.
+- Reduced motion handling if motion exists.
+- Error copy polish.
+- Performance cleanup.
+- Dead code cleanup.
 
 Acceptance Criteria:
-- Flutter analyze bersih.
-- Test utama pass.
-- UI konsisten dengan design guideline.
+- flutter analyze passes.
+- dart format passes.
+- flutter test passes.
+- Main user flow works:
+  Home → Daily Qira → Practice → Recording → Evaluation → Insight.
+- No widget calls API directly.
+- No business logic inside widgets.
+- No duplicate shared components.
+- Palette, spacing, radius, and typography stay consistent.
+- Main async flows have loading, empty, error, and success states.
+
+Constraints:
+- Do not introduce new product features.
+- Do not change architecture without approval.
+- Do not change palette without approval.
+
