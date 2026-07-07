@@ -5,7 +5,12 @@ import 'package:go_router/go_router.dart';
 
 import '../features/auth/auth.dart';
 import '../features/auth/domain/entities/auth_session.dart';
-import '../shared/widgets/feature_placeholder_screen.dart';
+import '../features/evaluation/evaluation.dart';
+import '../features/home/home.dart';
+import '../features/insight/insight.dart';
+import '../features/practice/practice.dart';
+import '../features/profile/profile.dart';
+import '../features/recording/recording.dart';
 import 'app_shell.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -52,32 +57,42 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: '/home',
-            builder: (context, state) => const FeaturePlaceholderScreen(
-              title: 'Home',
-              subtitle: 'Daily Qira akan menjadi hero utama di sini.',
-            ),
+            builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
             path: '/practice',
-            builder: (context, state) => const FeaturePlaceholderScreen(
-              title: 'Practice',
-              subtitle: 'Pilih materi, dengarkan referensi, lalu rekam.',
-            ),
+            builder: (context, state) => const PracticeScreen(),
+            routes: [
+              GoRoute(
+                path: ':practiceId',
+                builder: (context, state) {
+                  final practiceId = state.pathParameters['practiceId']!;
+                  return PracticeDetailScreen(practiceId: practiceId);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/recording/:practiceId',
+            builder: (context, state) {
+              final practiceId = state.pathParameters['practiceId']!;
+              return RecordingScreen(practiceId: practiceId);
+            },
+          ),
+          GoRoute(
+            path: '/evaluation/:practiceId',
+            builder: (context, state) {
+              final practiceId = state.pathParameters['practiceId']!;
+              return EvaluationResultScreen(practiceId: practiceId);
+            },
           ),
           GoRoute(
             path: '/insight',
-            builder: (context, state) => const FeaturePlaceholderScreen(
-              title: 'Insight',
-              subtitle: 'AI menemukan pola latihan dan rekomendasi personal.',
-            ),
+            builder: (context, state) => const InsightScreen(),
           ),
           GoRoute(
             path: '/profile',
-            builder: (context, state) => const FeaturePlaceholderScreen(
-              title: 'Profile',
-              subtitle: 'Kelola akun dan ringkasan latihan.',
-              showLogout: true,
-            ),
+            builder: (context, state) => const ProfileScreen(),
           ),
         ],
       ),
