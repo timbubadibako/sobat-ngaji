@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobat Ngaji · Arahan 3 — Editorial Mono</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fcfcfd; --surface:#fff; --ink:#0a0a0b; --ink-2:#17171a; --muted:#76767c; --faint:#a9a9af;
+    --line:#ececee; --hairline:#e2e2e5;
+    --accent:#0b3d43; --accent-2:#0e5560; --accent-soft:#e7eeee;
+    --success:#2f8f6f; --warning:#c98a1e; --danger:#c24a5e; --info:#3e6fae;
+    --success-soft:#e6f2ee; --warning-soft:#f6ecd9; --danger-soft:#f6e3e7; --info-soft:#e6eef7;
+    --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:12px;
+    --font:'Inter',system-ui,sans-serif; --ar:'Noto Naskh Arabic',serif;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{color:var(--ink);font-family:var(--font);min-height:100vh;background:var(--bg);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:48px 28px 90px}
+
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:40px}
+  .brand-dot{width:34px;height:34px;border-radius:7px;display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--ar);font-size:18px;background:var(--ink)}
+  .crumbs{font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.14em}
+  h1.title{font-size:clamp(40px,6vw,68px);line-height:.96;letter-spacing:-.045em;margin:10px 0 14px;font-weight:700}
+  .lead{max-width:620px;color:var(--muted);font-size:16px;line-height:1.7;margin:0}
+  .rule{height:1px;background:var(--hairline);margin:44px 0 0}
+
+  .sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:34px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+  .sec-h h2{margin:0;font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+  .sec-h span{color:var(--faint);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+
+  /* palette — minimal swatches, hex prominent */
+  .palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0;border:1px solid var(--hairline);border-radius:var(--r-md);overflow:hidden}
+  .sw{display:flex;flex-direction:column;border-right:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+  .sw .c{height:48px}
+  .sw .m{padding:10px 12px;background:var(--surface)}
+  .sw .m b{display:block;font-size:12px;font-weight:600}
+  .sw .m small{color:var(--faint);font-size:10px;font-weight:600;letter-spacing:.04em}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0}
+  .type-card{padding:22px;border:1px solid var(--hairline);margin:-1px 0 0 -1px;background:var(--surface)}
+  .type-card .lab{color:var(--faint);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+  .ar{font-family:var(--ar);direction:rtl;text-align:right}
+
+  .comp{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0}
+  .panel{padding:22px;border:1px solid var(--hairline);margin:-1px 0 0 -1px;background:var(--surface)}
+  .panel .lab{color:var(--faint);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+  .btn{display:inline-flex;min-height:44px;align-items:center;justify-content:center;gap:8px;padding:0 18px;border:1px solid var(--ink);border-radius:var(--r-sm);background:var(--ink);color:#fff;font-weight:600;font-family:var(--font);font-size:13px}
+  .btn.primary{background:var(--accent);border-color:var(--accent)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .link{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;font-size:13px;border-bottom:1px solid var(--accent);padding-bottom:2px}
+  .badge{display:inline-flex;min-height:26px;align-items:center;gap:6px;padding:0 10px;border-radius:var(--r-sm);background:transparent;border:1px solid var(--hairline);color:var(--ink-2);font-size:11px;font-weight:600;letter-spacing:.01em}
+  .badge.ai{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+  .badge.success{background:var(--success-soft);border-color:transparent;color:#1f6451}
+  .badge.warning{background:var(--warning-soft);border-color:transparent;color:#8a5e16}
+  .badge.danger{background:var(--danger-soft);border-color:transparent;color:#8d3441}
+  .pill{display:inline-flex;min-height:30px;align-items:center;padding:0 13px;border-radius:999px;background:transparent;border:1px solid var(--hairline);color:var(--ink-2);font-size:12px;font-weight:500}
+  .pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* hero — editorial: big type, hairline frame, arabic as the single hero */
+  .hero{padding:26px;border:1px solid var(--hairline);border-radius:var(--r-lg);background:var(--surface)}
+  .hero .kicker{display:flex;align-items:center;gap:10px;color:var(--accent);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+  .hero .kicker::before{content:"";width:22px;height:1px;background:var(--accent)}
+  .hero h3{margin:16px 0 8px;font-size:26px;line-height:1.15;letter-spacing:-.02em;max-width:300px}
+  .hero .ar{font-size:42px;line-height:1.5;margin:10px 0 6px;color:var(--ink)}
+  .hero p.note{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 16px}
+  .meta{display:flex;gap:28px;margin:14px 0 20px;padding-top:14px;border-top:1px solid var(--hairline)}
+  .meta div b{display:block;font-size:18px;letter-spacing:-.02em}
+  .meta div span{color:var(--faint);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+
+  .ai{padding:18px;border-left:2px solid var(--accent);background:transparent}
+  .ai .lab{color:var(--accent);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+  .ai h4{margin:4px 0 6px;font-size:16px;font-weight:600}
+  .ai p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+  .score{display:flex;align-items:center;gap:18px}
+  .ring{width:108px;height:108px;border-radius:50%;display:grid;place-items:center;
+    background:radial-gradient(circle,var(--surface) 0 60%,transparent 60%),conic-gradient(var(--accent) 0 82%,var(--line) 82%)}
+  .ring b{font-size:26px;letter-spacing:-.03em;font-weight:700}
+  .ring span{display:block;color:var(--faint);font-size:9px;text-align:center;text-transform:uppercase;letter-spacing:.1em}
+  .hl{font-family:var(--ar);direction:rtl;font-size:26px;line-height:2.2}
+  .word{padding:0 5px 1px;border-radius:4px}
+  .word.read{background:var(--success-soft);border-bottom:2px solid var(--success)}
+  .word.current{background:var(--info-soft);border-bottom:2px solid var(--info)}
+  .word.check{background:var(--warning-soft);border-bottom:2px solid var(--warning)}
+
+  .rec{width:92px;height:92px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;margin:4px auto;background:transparent}
+  .rec span{width:20px;height:20px;border-radius:5px;background:var(--ink)}
+  .wave{display:flex;align-items:center;justify-content:center;gap:4px;height:46px}
+  .wave i{width:3px;border-radius:0;background:var(--accent);animation:w .9s ease-in-out infinite}
+  @keyframes w{0%,100%{height:12px;opacity:.5}50%{height:32px;opacity:1}}
+
+  .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;margin-top:8px}
+  .phone{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--hairline);background:var(--bg);box-shadow:0 1px 0 var(--hairline)}
+  .phone .scr{padding:18px 18px 90px}
+  .ph-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .ph-title h2{margin:0;font-size:22px;letter-spacing:-.03em;font-weight:700}
+  .ph-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
+  .icbtn{width:38px;height:38px;border-radius:var(--r-sm);border:1px solid var(--hairline);background:var(--surface);display:grid;place-items:center;color:var(--ink)}
+  .card{border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface);padding:16px}
+  .nav{position:absolute;left:16px;right:16px;bottom:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--hairline);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+  .nav a{display:grid;place-items:center;min-height:48px;border-right:1px solid var(--hairline);color:var(--muted);font-size:10px;font-weight:600}
+  .nav a:last-child{border-right:0}
+  .nav a.on{color:#fff;background:var(--ink)}
+  .cap{color:var(--faint);font-size:11px;font-weight:600;text-align:center;margin-top:12px;text-transform:uppercase;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand-dot">ض</div>
+    <div>
+      <div class="crumbs">Arahan 3 · Alternatif</div>
+      <h1 class="title">Editorial Mono</h1>
+    </div>
+  </div>
+  <p class="lead">Near-white, satu aksen petrol, garis tipis, tipografi besar, dan whitespace luas. Mood <b>presisi & premium</b> — seperti jurnal/produk akademik yang tenang. Kontras terbaik untuk aksesibilitas.</p>
+
+  <div class="rule"></div>
+  <div class="sec-h"><h2>Palet warna</h2><span>Minimal · satu aksen</span></div>
+  <div class="palette">
+    <div class="sw"><div class="c" style="background:#0a0a0b"></div><div class="m"><b>Ink</b><small>#0A0A0B</small></div></div>
+    <div class="sw"><div class="c" style="background:#0b3d43"></div><div class="m"><b>Petrol · aksen</b><small>#0B3D43</small></div></div>
+    <div class="sw"><div class="c" style="background:#0e5560"></div><div class="m"><b>Petrol-2</b><small>#0E5560</small></div></div>
+    <div class="sw"><div class="c" style="background:#fcfcfd;border-bottom:1px solid var(--line)"></div><div class="m"><b>Canvas</b><small>#FCFCFD</small></div></div>
+    <div class="sw"><div class="c" style="background:#ececee"></div><div class="m"><b>Hairline</b><small>#ECECEE</small></div></div>
+    <div class="sw"><div class="c" style="background:#2f8f6f"></div><div class="m"><b>Success</b><small>#2F8F6F</small></div></div>
+    <div class="sw"><div class="c" style="background:#c98a1e"></div><div class="m"><b>Warning</b><small>#C98A1E</small></div></div>
+    <div class="sw"><div class="c" style="background:#c24a5e"></div><div class="m"><b>Danger</b><small>#C24A5E</small></div></div>
+    <div class="sw"><div class="c" style="background:#3e6fae"></div><div class="m"><b>Info · current</b><small>#3E6FAE</small></div></div>
+    <div class="sw"><div class="c" style="background:#76767c"></div><div class="m"><b>Muted</b><small>#76767C</small></div></div>
+  </div>
+
+  <div class="sec-h"><h2>Tipografi</h2><span>Inter · Noto Naskh Arabic</span></div>
+  <div class="types">
+    <div class="type-card"><div class="lab">Display · 40/40</div><div style="font-size:34px;font-weight:700;line-height:1.05;letter-spacing:-.035em">Latihan harian</div></div>
+    <div class="type-card"><div class="lab">Body · 16/26</div><div style="font-size:16px;line-height:1.6;color:var(--muted)">AI menyiapkan frasa yang cocok untuk latihan fokus huruf ض.</div></div>
+    <div class="type-card"><div class="lab">Arabic · Noto Naskh</div><div class="ar" style="font-size:38px;line-height:1.5">وَالضُّحَىٰ</div></div>
+    <div class="type-card"><div class="lab">Label · 11px tracking</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2)">Kecocokan bacaan</div></div>
+  </div>
+
+  <div class="sec-h"><h2>Komponen inti</h2><span>Flat · hairline</span></div>
+  <div class="comp">
+    <div class="panel"><div class="lab">Tombol & link</div><div class="row"><button class="btn primary">Mulai latihan</button><button class="btn">Lanjut</button><button class="btn ghost">Batal</button><a class="link">Lihat rekomendasi →</a></div></div>
+    <div class="panel"><div class="lab">Badge semantik</div><div class="row"><span class="badge ai">AI Insight</span><span class="badge success">Selesai</span><span class="badge warning">Perlu dicek</span><span class="badge danger">Perlu diulang</span></div></div>
+    <div class="panel"><div class="lab">Filter chip</div><div class="row"><span class="pill active">Semua</span><span class="pill">Juz 30</span><span class="pill">Huruf ض</span><span class="pill">Pemula</span></div></div>
+    <div class="panel"><div class="lab">Hero · Daily Qira</div>
+      <div class="hero"><span class="kicker">Daily Qira</span><h3>Latihan hari ini: fokus huruf ض.</h3><p class="ar">وَالضُّحَىٰ</p><div class="meta"><div><b>ض</b><span>Fokus</span></div><div><b>5 min</b><span>Estimasi</span></div><div><b>Sedang</b><span>AI</span></div></div><button class="btn primary" style="width:100%">Mulai latihan</button></div>
+    </div>
+    <div class="panel"><div class="lab">AI insight</div>
+      <div class="ai"><div class="lab">AI Insight</div><h4>Performa naik 9%.</h4><p>AI masih menemukan pola pada huruf ض. Rekomendasi disiapkan dari riwayat latihanmu.</p></div>
+    </div>
+    <div class="panel"><div class="lab">Hasil evaluasi</div>
+      <div class="score"><div class="ring"><div><b>82</b><span>kecocokan</span></div></div><div><span class="badge ai">Confidence · Sedang</span><h4 style="margin:8px 0 4px;font-weight:600">Bacaan cukup stabil.</h4><p style="margin:0;color:var(--muted);font-size:13px;line-height:1.55">Coba ulangi bagian tengah dengan tempo pelan.</p></div></div>
+      <div class="hl" style="margin-top:16px"><span class="word read">وَ</span><span class="word check">الضُّ</span><span class="word current">حَىٰ</span></div>
+    </div>
+    <div class="panel" style="text-align:center"><div class="lab">Tombol rekam + waveform</div><button class="rec"><span></span></button><div class="wave"><i style="height:18px"></i><i style="height:30px;animation-delay:.1s"></i><i style="height:14px;animation-delay:.2s"></i><i style="height:34px;animation-delay:.3s"></i><i style="height:22px;animation-delay:.4s"></i><i style="height:28px;animation-delay:.5s"></i><i style="height:16px;animation-delay:.6s"></i></div></div>
+  </div>
+
+  <div class="sec-h"><h2>Layar</h2><span>Home · Evaluation</span></div>
+  <div class="phones">
+    <div>
+    <div class="phone">
+      <div class="scr">
+        <div class="ph-title"><div><h2>Latihan hari ini</h2><p>AI menyiapkan sesi singkat untukmu.</p></div><button class="icbtn">🔔</button></div>
+        <div class="hero" style="margin-top:8px"><span class="kicker">Daily Qira</span><h3>Fokus huruf ض, sesi 5 menit.</h3><p class="ar">وَالضُّحَىٰ</p><div class="meta"><div><b>ض</b><span>Fokus</span></div><div><b>5 min</b><span>Estimasi</span></div><div><b>Sedang</b><span>AI</span></div></div><button class="btn primary" style="width:100%">Mulai latihan</button></div>
+        <div class="ai" style="margin-top:16px"><div class="lab">AI Insight</div><h4>Performa naik 9%.</h4><p>AI masih menemukan pola pada huruf ض.</p></div>
+      </div>
+      <div class="nav"><a class="on">Home</a><a>Practice</a><a>Insight</a><a>Profile</a></div>
+    </div>
+    <p class="cap">Home — whitespace & Arab sebagai hero tunggal</p>
+    </div>
+    <div>
+    <div class="phone">
+      <div class="scr">
+        <div class="ph-title"><div><h2>Hasil evaluasi</h2><p>Evaluasi awal sesi Ad-Dhuha.</p></div><span class="badge success">Selesai</span></div>
+        <div class="card" style="margin-top:8px"><div class="score"><div class="ring"><div><b>82</b><span>kecocokan</span></div></div><div><span class="badge ai">Confidence · Sedang</span><h4 style="margin:8px 0 4px;font-weight:600">Bacaan cukup stabil.</h4><p style="margin:0;color:var(--muted);font-size:13px;line-height:1.55">Coba ulangi bagian tengah dengan tempo pelan.</p></div></div></div>
+        <div class="card" style="margin-top:12px"><div class="lab" style="color:var(--faint);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px">Highlight ayat</div><div class="hl"><span class="word read">وَ</span><span class="word check">الضُّ</span><span class="word current">حَىٰ</span></div></div>
+        <div class="ai" style="margin-top:14px"><div class="lab">Rekomendasi</div><h4>Ulangi bagian tengah.</h4><p>Latih transisi ke huruf ض sebanyak 3 kali.</p></div>
+      </div>
+      <div class="nav"><a>Home</a><a class="on">Practice</a><a>Insight</a><a>Profile</a></div>
+    </div>
+    <p class="cap">Evaluation — skor tipis, garis hairline</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

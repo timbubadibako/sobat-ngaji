@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobat Ngaji · 4 Arahan Desain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box} html,body{margin:0}
+  body{font-family:'Inter',system-ui,sans-serif;color:#0b1220;min-height:100vh;
+    background:radial-gradient(circle at 8% 0%,rgba(83,199,240,.12),transparent 26rem),radial-gradient(circle at 95% 4%,rgba(50,213,200,.12),transparent 22rem),linear-gradient(180deg,#fbfdff,#f4f8fb)}
+  .wrap{max-width:1080px;margin:0 auto;padding:46px 24px 80px}
+  .crumbs{font-size:12px;font-weight:800;color:#6b7a8c;text-transform:uppercase;letter-spacing:.1em}
+  h1{font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-.035em;margin:8px 0 12px}
+  .lead{max-width:680px;color:#4a5868;font-size:16px;line-height:1.7;margin:0 0 10px}
+  .note{color:#6b7a8c;font-size:13px;line-height:1.6;max-width:680px}
+  .ar{font-family:'Noto Naskh Arabic',serif}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:34px}
+  .card{display:flex;flex-direction:column;border:1px solid #dbe6ed;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 10px 26px rgba(11,18,32,.08);text-decoration:none;color:inherit}
+  .card .thumb{height:120px;display:grid;place-items:center;position:relative;overflow:hidden}
+  .card .thumb .bigar{font-family:'Noto Naskh Arabic',serif;font-size:60px;line-height:1}
+  .card .body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+  .card h2{margin:2px 0 0;font-size:21px;letter-spacing:-.02em}
+  .card p{margin:0;color:#54616f;font-size:13.5px;line-height:1.55}
+  .swatches{display:flex;gap:6px;margin-top:auto;padding-top:10px}
+  .swatches i{width:22px;height:22px;border-radius:7px;border:1px solid rgba(11,18,32,.08)}
+  .open{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:13px}
+  .foot{margin-top:34px;color:#6b7a8c;font-size:13px;line-height:1.7}
+
+  /* direction thumbs */
+  .t-aqua{background:radial-gradient(circle at 80% 10%,rgba(83,199,240,.4),transparent 8rem),linear-gradient(145deg,#101a2e,#1a2a46)}
+  .t-aqua .bigar{color:rgba(255,255,255,.92)}
+  .t-manuscript{background:linear-gradient(180deg,#fbf7ef,#f4ecdd)}
+  .t-manuscript .bigar{color:#0e5e54}
+  .t-editorial{background:#fcfcfd;border-bottom:1px solid #ececee}
+  .t-editorial .bigar{color:#0a0a0b}
+  .t-soft{background:radial-gradient(circle at 80% 20%,rgba(79,179,172,.3),transparent 9rem),linear-gradient(180deg,#f2f7fa,#eaf3f1)}
+  .t-soft .bigar{color:#233240}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs">Sobat Ngaji · Design exploration</div>
+  <h1>Empat arahan desain</h1>
+  <p class="lead">Empat arahan visual untuk Sobat Ngaji — semua menghormati prinsip yang sama: calm, precise, trustworthy, teks Arab jadi pusat, AI terlihat tapi tidak ribut, dan menghindari jebakan "aplikasi Islami hijau generik".</p>
+  <p class="note">Klik kartu untuk membuka showcase penuh (palet, tipografi, komponen inti, dan mockup Home &amp; Evaluation). Semua self-contained, hanya HTML.</p>
+
+  <div class="grid">
+    <a class="card" href="showcase-aqua-ai.html">
+      <div class="thumb t-aqua"><span class="bigar">وَالضُّحَىٰ</span></div>
+      <div class="body">
+        <span class="tag" style="color:#087f78">Arahan 1 · Baseline</span>
+        <h2>Aqua AI Companion</h2>
+        <p>Navy + gradien aqua/cyan, glassmorphic. Paling modern &amp; "wow AI".</p>
+        <div class="swatches"><i style="background:#101a2e"></i><i style="background:#32d5c8"></i><i style="background:#53c7f0"></i><i style="background:#20c997"></i><i style="background:#ef476f"></i></div>
+        <span class="open" style="color:#101a2e">Buka showcase →</span>
+      </div>
+    </a>
+
+    <a class="card" href="showcase-manuscript-calm.html">
+      <div class="thumb t-manuscript"><span class="bigar">وَالضُّحَىٰ</span></div>
+      <div class="body">
+        <span class="tag" style="color:#0a4a42">Arahan 2 · Alternatif</span>
+        <h2>Manuscript Calm</h2>
+        <p>Kertas krem + deep teal, Arab gaya mushaf (Amiri). Paling sopan &amp; unik.</p>
+        <div class="swatches"><i style="background:#211c16"></i><i style="background:#0e5e54"></i><i style="background:#c77d2e"></i><i style="background:#fbf7ef"></i><i style="background:#2e7d5b"></i></div>
+        <span class="open" style="color:#0e5e54">Buka showcase →</span>
+      </div>
+    </a>
+
+    <a class="card" href="showcase-editorial-mono.html">
+      <div class="thumb t-editorial"><span class="bigar">وَالضُّحَىٰ</span></div>
+      <div class="body">
+        <span class="tag" style="color:#0b3d43">Arahan 3 · Alternatif</span>
+        <h2>Editorial Mono</h2>
+        <p>Near-white, satu aksen petrol, hairline &amp; whitespace luas. Paling presisi &amp; premium.</p>
+        <div class="swatches"><i style="background:#0a0a0b"></i><i style="background:#0b3d43"></i><i style="background:#2f8f6f"></i><i style="background:#fcfcfd;border-color:#ececee"></i><i style="background:#76767c"></i></div>
+        <span class="open" style="color:#0b3d43">Buka showcase →</span>
+      </div>
+    </a>
+
+    <a class="card" href="showcase-soft-companion.html">
+      <div class="thumb t-soft"><span class="bigar">وَالضُّحَىٰ</span></div>
+      <div class="body">
+        <span class="tag" style="color:#2c6e69">Arahan 4 · Alternatif</span>
+        <h2>Soft Companion</h2>
+        <p>Gradasi mist, soft navy, teal + coral, sangat membulat. Paling ramah pemula.</p>
+        <div class="swatches"><i style="background:#233240"></i><i style="background:#4fb3ac"></i><i style="background:#ee8a7b"></i><i style="background:#f2f7fa;border-color:#dce8ec"></i><i style="background:#3fb18b"></i></div>
+        <span class="open" style="color:#3a9e97">Buka showcase →</span>
+      </div>
+    </a>
+  </div>
+
+  <h2 style="font-size:20px;letter-spacing:-.02em;margin:40px 0 4px">Set layar lengkap</h2>
+  <p style="color:#54616f;font-size:14px;line-height:1.6;margin:0 0 16px">Tiap arahan punya 6 layar saling terhubung (Home · Practice · Recording · Evaluation · Insight · Profile) + launcher, dalam foldernya sendiri.</p>
+  <div class="grid">
+    <a class="card" href="screens-aqua/index.html"><div class="thumb t-aqua"><span class="bigar">وَالضُّحَىٰ</span></div><div class="body"><span class="tag" style="color:#087f78">Layar · Aqua AI</span><h2 style="font-size:19px">screens-aqua/</h2><p>6 layar + index, navy &amp; aqua/cyan.</p><span class="open" style="color:#101a2e">Buka layar →</span></div></a>
+    <a class="card" href="screens-manuscript/index.html"><div class="thumb t-manuscript"><span class="bigar">وَالضُّحَىٰ</span></div><div class="body"><span class="tag" style="color:#0a4a42">Layar · Manuscript</span><h2 style="font-size:19px">screens-manuscript/</h2><p>6 layar + index, krem &amp; deep teal.</p><span class="open" style="color:#0e5e54">Buka layar →</span></div></a>
+    <a class="card" href="screens-editorial/index.html"><div class="thumb t-editorial"><span class="bigar">وَالضُّحَىٰ</span></div><div class="body"><span class="tag" style="color:#0b3d43">Layar · Editorial</span><h2 style="font-size:19px">screens-editorial/</h2><p>6 layar + index, mono &amp; petrol.</p><span class="open" style="color:#0b3d43">Buka layar →</span></div></a>
+    <a class="card" href="screens-soft/index.html"><div class="thumb t-soft"><span class="bigar">وَالضُّحَىٰ</span></div><div class="body"><span class="tag" style="color:#2c6e69">Layar · Soft</span><h2 style="font-size:19px">screens-soft/</h2><p>6 layar + index, mist &amp; teal/coral.</p><span class="open" style="color:#3a9e97">Buka layar →</span></div></a>
+  </div>
+
+  <p class="foot"><b>Catatan lintas-arahan:</b> semua mockup memakai copy Bahasa Indonesia ("Mulai latihan", "Kecocokan bacaan", "Perlu dicek") agar konsisten dengan target pengguna &amp; proposal. Setelah satu arahan dipilih, token-nya tinggal dipindahkan ke <code>AppColors</code> / design tokens Flutter dan <code>docs/DesignGuideline.md</code>.</p>
+</div>
+</body>
+</html>
