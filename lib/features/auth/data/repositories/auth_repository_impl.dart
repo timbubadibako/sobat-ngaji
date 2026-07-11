@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_failure.dart';
+import '../../../../core/network/api_client.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -98,7 +99,7 @@ class AuthRepositoryImpl implements AuthRepository {
 }
 
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
-  return const MockAuthRemoteDataSource();
+  return BackendAuthRemoteDataSource(ref.watch(apiClientProvider));
 });
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {

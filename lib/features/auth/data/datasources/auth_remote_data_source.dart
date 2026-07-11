@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
+
+import '../../../../core/network/api_client.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/entities/auth_tokens.dart';
 import '../../domain/entities/auth_user.dart';
@@ -13,6 +16,77 @@ abstract interface class AuthRemoteDataSource {
     required String email,
     required String password,
   });
+}
+
+/// FastAPI-backed auth data source.
+class BackendAuthRemoteDataSource implements AuthRemoteDataSource {
+  const BackendAuthRemoteDataSource(this._client);
+
+  final Dio _client;
+
+  @override
+  Future<AuthSession> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _client.post<Map<String, dynamic>>(
+        '/auth/login',
+        data: {'email': email.trim(), 'password': password},
+      );
+
+      return _sessionFromJson(response.data ?? const {});
+    } on Object catch (error) {
+      throw mapDioFailure(
+        error,
+        fallbackCode: 'auth_request_failed',
+        fallbackMessage: 'Autentikasi belum berhasil. Coba lagi.',
+      );
+    }
+  }
+
+  @override
+  Future<AuthSession> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _client.post<Map<String, dynamic>>(
+        '/auth/signup',
+        data: {
+          'name': name.trim(),
+          'email': email.trim(),
+          'password': password,
+        },
+      );
+
+      return _sessionFromJson(response.data ?? const {});
+    } on Object catch (error) {
+      throw mapDioFailure(
+        error,
+        fallbackCode: 'auth_request_failed',
+        fallbackMessage: 'Autentikasi belum berhasil. Coba lagi.',
+      );
+    }
+  }
+
+  AuthSession _sessionFromJson(Map<String, dynamic> json) {
+    final user = json['user'] as Map<String, dynamic>? ?? const {};
+    final tokens = json['tokens'] as Map<String, dynamic>? ?? const {};
+
+    return AuthSession(
+      user: AuthUser(
+        id: user['id'] as String? ?? '',
+        name: user['name'] as String? ?? 'Sobat',
+        email: user['email'] as String? ?? '',
+      ),
+      tokens: AuthTokens(
+        accessToken: tokens['accessToken'] as String? ?? '',
+        refreshToken: tokens['refreshToken'] as String? ?? '',
+      ),
+    );
+  }
 }
 
 /// Mock auth API used until backend is available.
