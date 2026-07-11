@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/network/api_client.dart';
 import '../../domain/entities/recording_state.dart';
 import '../../domain/repositories/recording_repository.dart';
 import '../services/audio_recorder_service.dart';
@@ -10,10 +13,12 @@ class RecordingRepositoryImpl implements RecordingRepository {
   const RecordingRepositoryImpl({
     required this.audioRecorderService,
     required this.realtimeRecordingService,
+    required this.client,
   });
 
   final AudioRecorderService audioRecorderService;
   final RealtimeRecordingService realtimeRecordingService;
+  final Dio client;
 
   @override
   Future<bool> requestMicrophonePermission() {
@@ -22,9 +27,29 @@ class RecordingRepositoryImpl implements RecordingRepository {
 
   @override
   Future<String> createSession(String practiceId) async {
-    // TODO(jrilym): Replace with POST /practice-sessions.
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    return 'session_${practiceId}_${DateTime.now().millisecondsSinceEpoch}';
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        '/practice-sessions',
+        data: {
+          'practiceItemId': practiceId,
+          'clientSessionId':
+              'client_${practiceId}_${DateTime.now().millisecondsSinceEpoch}',
+          'device': {
+            'platform': defaultTargetPlatform.name,
+            'model': 'flutter',
+            'appVersion': '0.1.0',
+          },
+        },
+      );
+      final session = response.data?['session'] as Map<String, dynamic>? ?? {};
+      return session['id'] as String;
+    } on Object catch (error) {
+      throw mapDioFailure(
+        error,
+        fallbackCode: 'session_create_failed',
+        fallbackMessage: 'Sesi latihan belum berhasil dibuat.',
+      );
+    }
   }
 
   @override
@@ -47,5 +72,6 @@ final recordingRepositoryProvider = Provider<RecordingRepository>((ref) {
   return RecordingRepositoryImpl(
     audioRecorderService: ref.watch(audioRecorderServiceProvider),
     realtimeRecordingService: ref.watch(realtimeRecordingServiceProvider),
+    client: ref.watch(apiClientProvider),
   );
 });
