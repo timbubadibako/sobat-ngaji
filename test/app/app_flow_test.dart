@@ -7,6 +7,10 @@ import 'package:sobat_ngaji/features/auth/domain/entities/auth_session.dart';
 import 'package:sobat_ngaji/features/auth/domain/entities/auth_tokens.dart';
 import 'package:sobat_ngaji/features/auth/domain/entities/auth_user.dart';
 import 'package:sobat_ngaji/features/auth/domain/repositories/auth_repository.dart';
+import 'package:sobat_ngaji/features/home/data/datasources/home_remote_data_source.dart';
+import 'package:sobat_ngaji/features/home/data/repositories/home_repository_impl.dart';
+import 'package:sobat_ngaji/features/practice/data/datasources/practice_local_data_source.dart';
+import 'package:sobat_ngaji/features/practice/data/repositories/practice_repository_impl.dart';
 
 void main() {
   testWidgets('authenticated app flow opens Practice detail', (tester) async {
@@ -14,6 +18,12 @@ void main() {
       ProviderScope(
         overrides: [
           authRepositoryProvider.overrideWithValue(_FakeAuthRepository()),
+          homeRemoteDataSourceProvider.overrideWithValue(
+            const MockHomeRemoteDataSource(),
+          ),
+          practiceLocalDataSourceProvider.overrideWithValue(
+            const MockPracticeLocalDataSource(),
+          ),
         ],
         child: const SobatNgajiApp(),
       ),
@@ -45,6 +55,12 @@ void main() {
       ProviderScope(
         overrides: [
           authRepositoryProvider.overrideWithValue(_FakeAuthRepository()),
+          homeRemoteDataSourceProvider.overrideWithValue(
+            const MockHomeRemoteDataSource(),
+          ),
+          practiceLocalDataSourceProvider.overrideWithValue(
+            const MockPracticeLocalDataSource(),
+          ),
         ],
         child: const SobatNgajiApp(),
       ),

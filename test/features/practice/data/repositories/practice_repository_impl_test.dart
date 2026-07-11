@@ -49,4 +49,10 @@ class _FakePracticeLocalDataSource implements PracticeLocalDataSource {
       ),
     ];
   }
+
+  @override
+  Future<PracticeItem> fetchPracticeItem(String id) async {
+    final items = await fetchPracticeItems();
+    return findPracticeItemOrThrow(items, id);
+  }
 }

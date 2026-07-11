@@ -1,55 +1,75 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_failure.dart';
+import '../../../../core/network/api_client.dart';
 import '../../domain/entities/profile_summary.dart';
 import '../../domain/repositories/profile_repository.dart';
 
-/// Mock Profile repository until preferences storage/API lands.
+/// Backend-backed Profile repository.
 class ProfileRepositoryImpl implements ProfileRepository {
-  const ProfileRepositoryImpl();
+  const ProfileRepositoryImpl(this._client);
+
+  final Dio _client;
 
   @override
   Future<ProfileSummary> loadProfileSummary() async {
     try {
-      // TODO(jrilym): Store preferences in Hive or backend profile API.
-      await Future<void>.delayed(const Duration(milliseconds: 350));
-      return const ProfileSummary(
-        totalSessions: 42,
-        averageScore: 78,
-        focusLetter: 'ض',
-        streakDays: 7,
-        learningSummary:
-            'AI menemukan latihanmu paling stabil di pagi hari. Target berikutnya: 5 menit Ad-Dhuha.',
-        preferences: [
-          PreferenceItem(
-            title: 'Practice level',
-            value: 'Beginner, phrases',
-            icon: 'tune',
-          ),
-          PreferenceItem(
-            title: 'Audio feedback',
-            value: 'Reference recording on',
-            icon: 'mic',
-          ),
-          PreferenceItem(
-            title: 'Daily report',
-            value: 'Weekly Sunday',
-            icon: 'report',
-          ),
-        ],
-        achievement: 'Menyelesaikan Daily Qira dengan kecocokan 82%.',
-      );
+      final response = await _client.get<Map<String, dynamic>>('/profile');
+      return _profileFromJson(response.data ?? const {});
     } on AppFailure {
       rethrow;
-    } on Object {
-      throw const AppFailure(
-        code: 'profile_load_failed',
-        message: 'Profile belum berhasil dimuat.',
+    } on Object catch (error) {
+      throw mapDioFailure(
+        error,
+        fallbackCode: 'profile_load_failed',
+        fallbackMessage: 'Profile belum berhasil dimuat.',
       );
     }
+  }
+
+  ProfileSummary _profileFromJson(Map<String, dynamic> json) {
+    final summary = json['summary'] as Map<String, dynamic>? ?? const {};
+    final preferences =
+        json['preferences'] as Map<String, dynamic>? ?? const {};
+
+    return ProfileSummary(
+      totalSessions: summary['totalSessions'] as int? ?? 0,
+      averageScore: summary['averageScore'] as int? ?? 0,
+      focusLetter: summary['focusLetter'] as String? ?? '-',
+      streakDays: summary['streakDays'] as int? ?? 0,
+      learningSummary: summary['learningSummary'] as String? ?? '',
+      preferences: _preferenceItems(preferences),
+      achievement: summary['achievement'] as String? ?? '',
+    );
+  }
+
+  List<PreferenceItem> _preferenceItems(Map<String, dynamic> preferences) {
+    return [
+      PreferenceItem(
+        title: 'Practice level',
+        value:
+            '${preferences['practiceLevel'] ?? 'beginner'}, '
+            '${preferences['practiceMode'] ?? 'phrases'}',
+        icon: 'tune',
+      ),
+      PreferenceItem(
+        title: 'Audio feedback',
+        value: preferences['audioFeedbackEnabled'] == true
+            ? 'Reference recording on'
+            : 'Reference recording off',
+        icon: 'mic',
+      ),
+      PreferenceItem(
+        title: 'Daily report',
+        value:
+            preferences['dailyReportFrequency'] as String? ?? 'weekly_sunday',
+        icon: 'report',
+      ),
+    ];
   }
 }
 
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
-  return const ProfileRepositoryImpl();
+  return ProfileRepositoryImpl(ref.watch(apiClientProvider));
 });

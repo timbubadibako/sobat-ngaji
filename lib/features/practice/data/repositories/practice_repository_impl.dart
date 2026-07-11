@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_failure.dart';
+import '../../../../core/network/api_client.dart';
 import '../../domain/entities/practice_item.dart';
 import '../../domain/repositories/practice_repository.dart';
 import '../datasources/practice_local_data_source.dart';
@@ -27,15 +28,23 @@ class PracticeRepositoryImpl implements PracticeRepository {
 
   @override
   Future<PracticeItem> loadPracticeItem(String id) async {
-    final items = await loadPracticeItems();
-    return findPracticeItemOrThrow(items, id);
+    try {
+      return await localDataSource.fetchPracticeItem(id);
+    } on AppFailure {
+      rethrow;
+    } on Object {
+      throw const AppFailure(
+        code: 'practice_not_found',
+        message: 'Materi latihan belum ditemukan.',
+      );
+    }
   }
 }
 
 final practiceLocalDataSourceProvider = Provider<PracticeLocalDataSource>((
   ref,
 ) {
-  return const MockPracticeLocalDataSource();
+  return BackendPracticeDataSource(ref.watch(apiClientProvider));
 });
 
 final practiceRepositoryProvider = Provider<PracticeRepository>((ref) {

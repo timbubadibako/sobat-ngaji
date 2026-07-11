@@ -13,6 +13,9 @@ class PracticeItem {
     required this.estimatedMinutes,
     required this.referenceAudioUrl,
     required this.isDaily,
+    this.latinHint,
+    this.tags = const [],
+    this.segments = const [],
   });
 
   final String id;
@@ -27,4 +30,22 @@ class PracticeItem {
   final int estimatedMinutes;
   final String referenceAudioUrl;
   final bool isDaily;
+  final String? latinHint;
+  final List<String> tags;
+  final List<PracticeSegment> segments;
+}
+
+/// Text segment metadata from backend practice detail.
+class PracticeSegment {
+  const PracticeSegment({
+    required this.index,
+    required this.text,
+    required this.startChar,
+    required this.endChar,
+  });
+
+  final int index;
+  final String text;
+  final int startChar;
+  final int endChar;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_failure.dart';
+import '../../../../core/network/api_client.dart';
 import '../../domain/entities/home_summary.dart';
 import '../../domain/repositories/home_repository.dart';
 import '../datasources/home_remote_data_source.dart';
@@ -28,7 +29,7 @@ class HomeRepositoryImpl implements HomeRepository {
 }
 
 final homeRemoteDataSourceProvider = Provider<HomeRemoteDataSource>((ref) {
-  return const MockHomeRemoteDataSource();
+  return BackendHomeRemoteDataSource(ref.watch(apiClientProvider));
 });
 
 final homeRepositoryProvider = Provider<HomeRepository>((ref) {
