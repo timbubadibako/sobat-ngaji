@@ -152,11 +152,12 @@ class _FloatingPillNav extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 430),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(color: AppColors.line),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.deepNavy.withValues(alpha: 0.16),
+                  color: AppColors.ink.withValues(alpha: 0.14),
                   blurRadius: 28,
                   offset: const Offset(0, 12),
                 ),
@@ -220,7 +221,7 @@ class _AnimatedPillNavItem extends StatelessWidget {
               height: 42,
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: selected ? AppColors.info : Colors.transparent,
+                color: selected ? AppColors.aqua : Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
               ),
               child: Row(
@@ -230,7 +231,7 @@ class _AnimatedPillNavItem extends StatelessWidget {
                   Icon(
                     selected ? item.selectedIcon : item.icon,
                     size: 19,
-                    color: selected ? Colors.white : AppColors.ink,
+                    color: selected ? AppColors.ink : AppColors.muted,
                   ),
                   if (selected) ...[
                     const SizedBox(width: AppSpacing.xxs),
@@ -245,7 +246,7 @@ class _AnimatedPillNavItem extends StatelessWidget {
                           overflow: TextOverflow.fade,
                           softWrap: false,
                           style: theme.textTheme.labelMedium?.copyWith(
-                            color: Colors.white,
+                            color: AppColors.ink,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

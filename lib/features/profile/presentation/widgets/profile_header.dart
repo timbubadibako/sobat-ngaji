@@ -22,12 +22,12 @@ class ProfileHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: AppColors.deepNavy,
+            backgroundColor: AppColors.navy,
             child: Text(
               initial,
-              style: Theme.of(
-                context,
-              ).textTheme.headlineMedium?.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: AppColors.surfaceElevated,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.sm),

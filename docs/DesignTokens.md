@@ -6,18 +6,35 @@ Dokumen ini memecah design guideline menjadi token implementasi agar Flutter the
 ```dart
 class AppColors {
   static const ink = Color(0xFF0B1220);
-  static const deepNavy = Color(0xFF101A2E);
+  static const deepNavy = Color(0xFF0B1220);
+  static const navy = Color(0xFF101A2E);
+  static const navy2 = Color(0xFF1A2A46);
   static const surface = Color(0xFFF7FAFC);
   static const surfaceMuted = Color(0xFFEEF4F7);
+  static const surfaceSoft = Color(0xFFF3F8FA);
+  static const surfaceElevated = Color(0xFFFFFFFF);
+  static const line = Color(0xFFDBE6ED);
+  static const muted = Color(0xFF6B7A8C);
   static const aqua = Color(0xFF32D5C8);
   static const cyan = Color(0xFF53C7F0);
   static const teal = Color(0xFF17B8A6);
   static const success = Color(0xFF20C997);
+  static const successSoft = Color(0xFFDDF8EF);
+  static const successText = Color(0xFF087C5B);
   static const warning = Color(0xFFF5A524);
+  static const warningSoft = Color(0xFFFFF1CF);
+  static const warningText = Color(0xFF9F6500);
   static const error = Color(0xFFEF476F);
+  static const errorSoft = Color(0xFFFFE3EA);
+  static const errorText = Color(0xFFB42046);
   static const info = Color(0xFF4DA3FF);
+  static const infoSoft = Color(0xFFE0F0FF);
 }
 ```
+
+Flutter implementation stores the preset in `AppPalette` / `AppPalettes.aquaAi`
+and exposes compile-time constants through `AppColors` so const widgets remain valid.
+To change theme later, add a new `AppPalette` preset and update `AppColors` from it.
 
 ## Spacing Tokens
 ```dart
@@ -76,6 +93,8 @@ Arabic Small: 20/34
 ```
 
 ## Semantic Usage
+- Navy/navy2: hero panels, auth header, strong AI/brand panels.
+- Surface Elevated: cards and floating navigation.
 - Aqua/cyan: AI, brand action, current recitation.
 - Green: terbaca baik.
 - Yellow/orange: perlu dicek.
@@ -84,4 +103,3 @@ Arabic Small: 20/34
 
 ## Rule
 Jika nilai token berubah, update `docs/DesignGuideline.md`, HTML prototype, dan Flutter theme secara konsisten.
-

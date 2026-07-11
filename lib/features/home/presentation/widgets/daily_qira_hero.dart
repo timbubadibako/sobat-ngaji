@@ -28,7 +28,7 @@ class DailyQiraHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.deepNavy, AppColors.teal],
+          colors: [AppColors.navy, AppColors.navy2],
         ),
       ),
       child: Column(
@@ -41,7 +41,7 @@ class DailyQiraHero extends StatelessWidget {
               Text(
                 'AI has prepared today\'s practice.',
                 style: theme.textTheme.labelMedium?.copyWith(
-                  color: Colors.white70,
+                  color: AppColors.surfaceElevated.withValues(alpha: 0.72),
                 ),
               ),
             ],
@@ -63,14 +63,16 @@ class DailyQiraHero extends StatelessWidget {
             style: const TextStyle(
               fontSize: 34,
               height: 52 / 34,
-              color: Colors.white,
+              color: AppColors.surfaceElevated,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
             dailyQira.translation,
-            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white70),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: AppColors.surfaceElevated.withValues(alpha: 0.72),
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           Wrap(
@@ -93,14 +95,14 @@ class DailyQiraHero extends StatelessWidget {
               Icon(
                 Icons.record_voice_over_outlined,
                 size: 16,
-                color: Colors.white.withValues(alpha: 0.7),
+                color: AppColors.surfaceElevated.withValues(alpha: 0.7),
               ),
               const SizedBox(width: AppSpacing.xxs),
               Expanded(
                 child: Text(
                   'Focus letter: ض. ${dailyQira.reciter}',
                   style: theme.textTheme.labelMedium?.copyWith(
-                    color: Colors.white70,
+                    color: AppColors.surfaceElevated.withValues(alpha: 0.72),
                   ),
                 ),
               ),
@@ -137,9 +139,11 @@ class _HeroMetaChip extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.12),
+        color: AppColors.surfaceElevated.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+        border: Border.all(
+          color: AppColors.surfaceElevated.withValues(alpha: 0.12),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -148,7 +152,9 @@ class _HeroMetaChip extends StatelessWidget {
           const SizedBox(width: AppSpacing.xxs),
           Text(
             label,
-            style: theme.textTheme.labelMedium?.copyWith(color: Colors.white),
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: AppColors.surfaceElevated,
+            ),
           ),
         ],
       ),
@@ -169,13 +175,13 @@ class _HeroTag extends StatelessWidget {
         vertical: AppSpacing.xxs,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.15),
+        color: AppColors.surfaceElevated.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppRadius.pill),
       ),
       child: Text(
         label,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: Colors.white,
+          color: AppColors.surfaceElevated,
           fontWeight: FontWeight.w700,
         ),
       ),

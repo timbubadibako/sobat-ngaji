@@ -25,7 +25,12 @@ class ScoreCard extends StatelessWidget {
               children: [
                 Chip(
                   label: Text('AI Confidence · ${result.confidenceLevel}'),
-                  backgroundColor: AppColors.aqua.withValues(alpha: 0.18),
+                  backgroundColor: AppColors.aqua.withValues(alpha: 0.16),
+                  side: const BorderSide(color: AppColors.aqua),
+                  labelStyle: theme.textTheme.labelMedium?.copyWith(
+                    color: AppColors.ink,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text('Bacaan cukup stabil.', style: theme.textTheme.titleLarge),

@@ -58,7 +58,7 @@ class _AuthHero extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.deepNavy, Color(0xFF1A2A46)],
+          colors: [AppColors.navy, AppColors.navy2],
         ),
       ),
       child: Padding(
@@ -70,16 +70,16 @@ class _AuthHero extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             Text(
               title,
-              style: Theme.of(
-                context,
-              ).textTheme.headlineLarge?.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                color: AppColors.surfaceElevated,
+              ),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
               subtitle,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: AppColors.surfaceElevated.withValues(alpha: 0.72),
+              ),
             ),
           ],
         ),
@@ -96,7 +96,7 @@ class _AiBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.aqua.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(

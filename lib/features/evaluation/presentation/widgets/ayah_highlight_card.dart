@@ -29,7 +29,7 @@ class AyahHighlightCard extends StatelessWidget {
                   vertical: AppSpacing.xxs,
                 ),
                 decoration: BoxDecoration(
-                  color: _color(segment.status).withValues(alpha: 0.14),
+                  color: _backgroundColor(segment.status),
                   borderRadius: BorderRadius.circular(AppRadius.small),
                   border: Border(
                     bottom: BorderSide(color: _color(segment.status), width: 3),
@@ -56,6 +56,15 @@ class AyahHighlightCard extends StatelessWidget {
       HighlightStatus.current => AppColors.info,
       HighlightStatus.needsCheck => AppColors.warning,
       HighlightStatus.needsRetry => AppColors.error,
+    };
+  }
+
+  Color _backgroundColor(HighlightStatus status) {
+    return switch (status) {
+      HighlightStatus.read => AppColors.successSoft,
+      HighlightStatus.current => AppColors.infoSoft,
+      HighlightStatus.needsCheck => AppColors.warningSoft,
+      HighlightStatus.needsRetry => AppColors.errorSoft,
     };
   }
 }

@@ -12,25 +12,37 @@ Sobat Ngaji menggunakan visual language yang calm, precise, trustworthy, dan mod
 
 ## Color Palette
 ### Brand
-- Ink: `#0B1220`
-- Deep Navy: `#101A2E`
+- Ink Deep: `#0B1220`
+- Ink / Navy: `#101A2E`
+- Navy 2: `#1A2A46`
 - Surface: `#F7FAFC`
 - Surface Muted: `#EEF4F7`
+- Surface Soft: `#F3F8FA`
+- Surface Elevated: `#FFFFFF`
+- Line: `#DBE6ED`
+- Muted Text: `#6B7A8C`
 - Aqua: `#32D5C8`
 - Cyan: `#53C7F0`
 - Teal: `#17B8A6`
 
 ### Semantic
 - Success: `#20C997`
+- Success Soft: `#DDF8EF`
 - Warning: `#F5A524`
+- Warning Soft: `#FFF1CF`
 - Error: `#EF476F`
+- Error Soft: `#FFE3EA`
 - Info: `#4DA3FF`
+- Info Soft: `#E0F0FF`
 
 ### Usage Rules
 - Aqua/cyan dipakai untuk AI, brand action, dan current recitation.
+- Navy + Navy 2 dipakai untuk hero, auth header, dan strong AI/brand panels.
+- Surface Elevated dipakai untuk card dan floating navigation.
 - Green dipakai untuk bacaan yang terbaca baik.
 - Red dipakai untuk bagian yang perlu diulang atau error.
 - Yellow/orange dipakai untuk warning atau perlu dicek.
+- Soft semantic colors dipakai untuk badge, chip, progress background, dan low-emphasis state.
 - Jangan membuat semua state hijau.
 - Jangan mengganti palette tanpa update dokumen ini.
 
@@ -115,4 +127,3 @@ Hindari:
 - "Pasti salah"
 - "AI menjamin"
 - "Bacaan kamu salah total"
-

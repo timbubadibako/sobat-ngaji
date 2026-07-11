@@ -80,7 +80,7 @@ class _PracticeContent extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           AppCard(
-            color: AppColors.surfaceMuted,
+            color: AppColors.surfaceSoft,
             child: Row(
               children: [
                 const CircleAvatar(

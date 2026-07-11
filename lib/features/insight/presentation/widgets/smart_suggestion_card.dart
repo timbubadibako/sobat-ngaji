@@ -13,7 +13,7 @@ class SmartSuggestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
-      color: AppColors.deepNavy,
+      color: AppColors.navy,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +28,7 @@ class SmartSuggestionCard extends StatelessWidget {
             suggestion,
             style: Theme.of(
               context,
-            ).textTheme.bodyLarge?.copyWith(color: Colors.white),
+            ).textTheme.bodyLarge?.copyWith(color: AppColors.surfaceElevated),
           ),
           const SizedBox(height: AppSpacing.sm),
           FilledButton.icon(

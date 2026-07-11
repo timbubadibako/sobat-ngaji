@@ -15,7 +15,7 @@ class WeeklyReportCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return AppCard(
-      color: AppColors.surfaceMuted,
+      color: AppColors.surfaceSoft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -22,6 +22,12 @@ class PracticeFilterChip extends StatelessWidget {
       selected: selected,
       onSelected: (_) => onSelected(),
       selectedColor: AppColors.aqua.withValues(alpha: 0.2),
+      backgroundColor: AppColors.surfaceSoft,
+      labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+        color: selected ? AppColors.ink : AppColors.muted,
+        fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+      ),
+      side: BorderSide(color: selected ? AppColors.aqua : AppColors.line),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.pill),
       ),

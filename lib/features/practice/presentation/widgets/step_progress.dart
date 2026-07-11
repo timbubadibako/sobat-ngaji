@@ -31,7 +31,7 @@ class StepProgress extends StatelessWidget {
           child: Text(
             '$step',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: active ? Colors.white : AppColors.ink,
+              color: active ? AppColors.surfaceElevated : AppColors.ink,
             ),
           ),
         );

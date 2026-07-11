@@ -92,7 +92,7 @@ class RecordButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         shape: const CircleBorder(),
         fixedSize: const Size.square(88),
-        backgroundColor: isRecording ? AppColors.error : AppColors.deepNavy,
+        backgroundColor: isRecording ? AppColors.error : AppColors.navy,
       ),
       child: Icon(isRecording ? Icons.stop : Icons.mic, size: 34),
     );
