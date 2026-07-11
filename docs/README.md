@@ -19,6 +19,7 @@ Dokumen ini adalah source truth untuk product, design, architecture, dan coding 
 - `SRS.md`
 - `API.md`
 - `APISequence.md`
+- `AppBackendAlignmentRequirements.md`
 - `BackendRequirements.md`
 - `Database.md`
 - `AIFlow.md`
@@ -48,7 +49,7 @@ Dokumen ini adalah source truth untuk product, design, architecture, dan coding 
 11 State Management -> StateManagement.md
 12 AI Architecture -> AIFlow.md
 13 Backend Architecture -> BackendArchitecture.md, BackendRequirements.md
-14 API Contract -> API.md, APISequence.md, BackendRequirements.md
+14 API Contract -> API.md, APISequence.md, BackendRequirements.md, AppBackendAlignmentRequirements.md
 15 Database Schema -> Database.md
 16 Feature Roadmap -> FeatureRoadmap.md
 17 Definition of Done -> DefinitionOfDone.md
