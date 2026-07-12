@@ -49,12 +49,23 @@
   .sw .m{padding:9px 11px}
   .sw .m b{display:block;font-size:13px}
   .sw .m small{color:var(--muted);font-size:11px;font-weight:700}
+  .sw .role{display:inline-flex;margin-bottom:6px;padding:3px 7px;border-radius:999px;background:var(--surface-muted);color:var(--navy);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+  .sw .use{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 
   /* type */
   .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
   .type-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:18px;box-shadow:var(--sh1)}
   .type-card .lab{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+  .type-card .note{display:block;margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45}
+  .h1-sample{font-size:32px;font-weight:600;line-height:40px;letter-spacing:-.03em}
+  .h2-sample{font-size:24px;font-weight:600;line-height:32px;letter-spacing:-.02em}
+  .h3-sample{font-size:20px;font-weight:600;line-height:28px;letter-spacing:-.01em}
+  .body-sample{font-size:16px;font-weight:400;line-height:24px}
+  .caption-sample{font-size:12px;font-weight:600;line-height:16px}
   .ar{font-family:var(--ar);direction:rtl;text-align:right}
+  .ar-display{font-size:34px;line-height:52px;font-weight:600}
+  .ar-body{font-size:26px;line-height:44px;font-weight:500}
+  .ar-small{font-size:20px;line-height:34px;font-weight:500}
 
   /* components */
   .comp{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
@@ -145,24 +156,30 @@
 
   <div class="sec-h"><h2>Palet warna</h2><span>Brand + semantik</span></div>
   <div class="palette">
-    <div class="sw"><div class="c" style="background:#101a2e"></div><div class="m"><b>Ink / Navy</b><small>#101A2E</small></div></div>
-    <div class="sw"><div class="c" style="background:#0b1220"></div><div class="m"><b>Ink Deep</b><small>#0B1220</small></div></div>
-    <div class="sw"><div class="c" style="background:#32d5c8"></div><div class="m"><b>Aqua · AI</b><small>#32D5C8</small></div></div>
-    <div class="sw"><div class="c" style="background:#53c7f0"></div><div class="m"><b>Cyan · AI</b><small>#53C7F0</small></div></div>
-    <div class="sw"><div class="c" style="background:#17b8a6"></div><div class="m"><b>Teal</b><small>#17B8A6</small></div></div>
-    <div class="sw"><div class="c" style="background:#20c997"></div><div class="m"><b>Success</b><small>#20C997</small></div></div>
-    <div class="sw"><div class="c" style="background:#f5a524"></div><div class="m"><b>Warning</b><small>#F5A524</small></div></div>
-    <div class="sw"><div class="c" style="background:#ef476f"></div><div class="m"><b>Danger</b><small>#EF476F</small></div></div>
-    <div class="sw"><div class="c" style="background:#4da3ff"></div><div class="m"><b>Info · current</b><small>#4DA3FF</small></div></div>
-    <div class="sw"><div class="c" style="background:#f7fafc;border-bottom:1px solid var(--line)"></div><div class="m"><b>Surface</b><small>#F7FAFC</small></div></div>
+    <div class="sw"><div class="c" style="background:#32d5c8"></div><div class="m"><span class="role">Primary</span><b>Aqua · AI Action</b><small>#32D5C8</small><span class="use">CTA utama, progress aktif, state AI utama.</span></div></div>
+    <div class="sw"><div class="c" style="background:#53c7f0"></div><div class="m"><span class="role">Accent</span><b>Cyan · AI Signal</b><small>#53C7F0</small><span class="use">Waveform, processing, highlight analisis.</span></div></div>
+    <div class="sw"><div class="c" style="background:#17b8a6"></div><div class="m"><span class="role">Secondary</span><b>Teal · Recitation</b><small>#17B8A6</small><span class="use">Selected phrase, recitation marker, support action.</span></div></div>
+    <div class="sw"><div class="c" style="background:#20c997"></div><div class="m"><span class="role">Success</span><b>Terbaca baik</b><small>#20C997</small><span class="use">Jawaban benar, mastered letters, selesai positif.</span></div></div>
+    <div class="sw"><div class="c" style="background:#f5a524"></div><div class="m"><span class="role">Warning</span><b>Perlu dicek</b><small>#F5A524</small><span class="use">Confidence medium, bagian perlu perhatian.</span></div></div>
+    <div class="sw"><div class="c" style="background:#ef476f"></div><div class="m"><span class="role">Danger</span><b>Perlu diulang</b><small>#EF476F</small><span class="use">Error bacaan, gagal rekam, destructive state.</span></div></div>
+    <div class="sw"><div class="c" style="background:#4da3ff"></div><div class="m"><span class="role">Info</span><b>Current state</b><small>#4DA3FF</small><span class="use">Sedang dibaca, status berjalan, current ayah.</span></div></div>
+    <div class="sw"><div class="c" style="background:#101a2e"></div><div class="m"><span class="role">Text / Strong</span><b>Ink / Navy</b><small>#101A2E</small><span class="use">Headline, nav aktif, hero surface, score utama.</span></div></div>
+    <div class="sw"><div class="c" style="background:#0b1220"></div><div class="m"><span class="role">Deep Text</span><b>Ink Deep</b><small>#0B1220</small><span class="use">Text kontras tertinggi dan overlay gelap.</span></div></div>
+    <div class="sw"><div class="c" style="background:#f7fafc;border-bottom:1px solid var(--line)"></div><div class="m"><span class="role">Surface</span><b>App canvas</b><small>#F7FAFC</small><span class="use">Background screen dan area besar.</span></div></div>
+    <div class="sw"><div class="c" style="background:#eef4f7;border-bottom:1px solid var(--line)"></div><div class="m"><span class="role">Muted Surface</span><b>Quiet UI</b><small>#EEF4F7</small><span class="use">Inactive tab, chip, skeleton, soft panel.</span></div></div>
+    <div class="sw"><div class="c" style="background:#dbe6ed"></div><div class="m"><span class="role">Border</span><b>Line</b><small>#DBE6ED</small><span class="use">Divider, card border, input outline.</span></div></div>
   </div>
 
   <div class="sec-h"><h2>Tipografi</h2><span>Inter · Noto Naskh Arabic</span></div>
   <div class="types">
-    <div class="type-card"><div class="lab">Display 32/40 semibold</div><div style="font-size:32px;font-weight:600;line-height:1.05;letter-spacing:-.03em">Latihan harian</div></div>
-    <div class="type-card"><div class="lab">Body 16/24 regular</div><div style="font-size:16px;line-height:1.5">AI menyiapkan frasa yang cocok untuk latihan fokus huruf ض.</div></div>
-    <div class="type-card"><div class="lab">Arabic Display · Noto Naskh</div><div class="ar" style="font-size:34px;line-height:1.6">وَالضُّحَىٰ</div></div>
-    <div class="type-card"><div class="lab">Caption 12/16 medium</div><div style="font-size:12px;font-weight:600">Kecocokan bacaan · evaluasi awal</div></div>
+    <div class="type-card"><div class="lab">Heading 1 · 32/40 semibold</div><div class="h1-sample">Latihan harian</div><span class="note">Screen title, main state heading.</span></div>
+    <div class="type-card"><div class="lab">Heading 2 · 24/32 semibold</div><div class="h2-sample">Hasil evaluasi</div><span class="note">Section title, panel headline.</span></div>
+    <div class="type-card"><div class="lab">Heading 3 · 20/28 semibold</div><div class="h3-sample">Daily Qira</div><span class="note">Card title, list group title.</span></div>
+    <div class="type-card"><div class="lab">Body · 16/24 regular</div><div class="body-sample">AI menyiapkan frasa yang cocok untuk latihan fokus huruf ض.</div><span class="note">Main copy, description, form helper.</span></div>
+    <div class="type-card"><div class="lab">Caption · 12/16 medium</div><div class="caption-sample">Kecocokan bacaan · evaluasi awal</div><span class="note">Metadata, chips, compact labels.</span></div>
+    <div class="type-card"><div class="lab">Arabic Display · 34/52</div><div class="ar ar-display">وَالضُّحَىٰ</div><span class="note">Main ayah or phrase focus.</span></div>
+    <div class="type-card"><div class="lab">Arabic Body · 26/44</div><div class="ar ar-body">الرَّحْمَٰنِ الرَّحِيمِ</div><span class="note">Practice line and correction text.</span></div>
+    <div class="type-card"><div class="lab">Arabic Small · 20/34</div><div class="ar ar-small">مَالِكِ يَوْمِ الدِّينِ</div><span class="note">Compact quote and list preview.</span></div>
   </div>
 
   <div class="sec-h"><h2>Komponen inti</h2><span>Button · badge · chip</span></div>

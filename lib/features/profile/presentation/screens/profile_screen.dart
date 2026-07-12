@@ -24,10 +24,20 @@ class ProfileScreen extends ConsumerWidget {
       body: SafeArea(
         child: profileState.when(
           loading: () => const LoadingState(message: 'Memuat profile...'),
-          error: (error, _) => ErrorStateView(
-            error: error,
-            onRetry: () =>
-                ref.read(profileControllerProvider.notifier).refresh(),
+          error: (error, _) => ListView(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            children: [
+              ErrorStateView(
+                error: error,
+                onRetry: () =>
+                    ref.read(profileControllerProvider.notifier).refresh(),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              LogoutButton(
+                onLogout: () =>
+                    ref.read(authControllerProvider.notifier).logout(),
+              ),
+            ],
           ),
           data: (profile) => RefreshIndicator(
             onRefresh: () =>

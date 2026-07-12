@@ -11,7 +11,7 @@ const _authSessionKey = 'auth_session';
 /// Local backend base URL while production deployment is pending.
 const apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
-  defaultValue: 'http://127.0.0.1:8000/v1',
+  defaultValue: 'https://xvcs1ml0-8000.asse.devtunnels.ms/v1',
 );
 
 /// Shared Dio client for HTTP data sources.
