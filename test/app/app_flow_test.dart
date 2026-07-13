@@ -13,6 +13,26 @@ import 'package:sobat_ngaji/features/practice/data/datasources/practice_local_da
 import 'package:sobat_ngaji/features/practice/data/repositories/practice_repository_impl.dart';
 
 void main() {
+  testWidgets('auth bypass opens Home without login session', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          homeRemoteDataSourceProvider.overrideWithValue(
+            const MockHomeRemoteDataSource(),
+          ),
+          practiceLocalDataSourceProvider.overrideWithValue(
+            const MockPracticeLocalDataSource(),
+          ),
+        ],
+        child: const SobatNgajiApp(),
+      ),
+    );
+
+    await _pumpUntilFound(tester, find.text('Latihan hari ini'));
+    expect(find.text('Latihan hari ini'), findsOneWidget);
+    expect(find.text('Masuk ke Sobat Ngaji'), findsNothing);
+  });
+
   testWidgets('authenticated app flow opens Practice detail', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
