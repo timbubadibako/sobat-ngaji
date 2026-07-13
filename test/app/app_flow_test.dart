@@ -28,8 +28,8 @@ void main() {
       ),
     );
 
-    await _pumpUntilFound(tester, find.text('Latihan hari ini'));
-    expect(find.text('Latihan hari ini'), findsOneWidget);
+    await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
+    expect(find.text('CONTINUE LEARNING'), findsOneWidget);
     expect(find.text('Masuk ke Sobat Ngaji'), findsNothing);
   });
 
@@ -49,14 +49,14 @@ void main() {
       ),
     );
 
-    await _pumpUntilFound(tester, find.text('Latihan hari ini'));
-    if (find.text('Latihan hari ini').evaluate().isEmpty) {
+    await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
+    if (find.text('CONTINUE LEARNING').evaluate().isEmpty) {
       final texts = tester.widgetList<Text>(find.byType(Text)).map((text) {
         return text.data ?? text.textSpan?.toPlainText() ?? '';
       }).toList();
       fail('Home did not render. Visible texts: $texts');
     }
-    expect(find.text('Latihan hari ini'), findsOneWidget);
+    expect(find.text('CONTINUE LEARNING'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Practice'));
     await _pumpUntilFound(tester, find.text('Curated phrases'));
@@ -86,15 +86,15 @@ void main() {
       ),
     );
 
-    await _pumpUntilFound(tester, find.text('Latihan hari ini'));
+    await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(-280, 0));
     await _pumpUntilFound(tester, find.text('Curated phrases'));
     expect(find.text('Curated phrases'), findsOneWidget);
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(280, 0));
-    await _pumpUntilFound(tester, find.text('Latihan hari ini'));
-    expect(find.text('Latihan hari ini'), findsOneWidget);
+    await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
+    expect(find.text('CONTINUE LEARNING'), findsOneWidget);
   });
 }
 

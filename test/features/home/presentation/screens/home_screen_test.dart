@@ -23,8 +23,14 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Latihan hari ini'), findsOneWidget);
-    expect(find.text('وَالضُّحَىٰ'), findsOneWidget);
-    expect(find.text('Ad-Dhuha · Ayat 1'), findsOneWidget);
+    expect(find.text('Siap lanjut latihan hari ini?'), findsOneWidget);
+    expect(find.text('CONTINUE LEARNING'), findsOneWidget);
+    expect(find.text('Weekly Progress'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -420));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Latihan Terakhir'), findsOneWidget);
+    expect(find.text('AI Insight'), findsOneWidget);
   });
 }
