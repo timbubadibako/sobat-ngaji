@@ -221,7 +221,7 @@ class _AnimatedPillNavItem extends StatelessWidget {
               height: 42,
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: selected ? AppColors.aqua : Colors.transparent,
+                color: selected ? AppColors.navy : Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
               ),
               child: Row(
@@ -231,7 +231,9 @@ class _AnimatedPillNavItem extends StatelessWidget {
                   Icon(
                     selected ? item.selectedIcon : item.icon,
                     size: 19,
-                    color: selected ? AppColors.ink : AppColors.muted,
+                    color: selected
+                        ? AppColors.surfaceElevated
+                        : AppColors.muted,
                   ),
                   if (selected) ...[
                     const SizedBox(width: AppSpacing.xxs),
@@ -246,7 +248,7 @@ class _AnimatedPillNavItem extends StatelessWidget {
                           overflow: TextOverflow.fade,
                           softWrap: false,
                           style: theme.textTheme.labelMedium?.copyWith(
-                            color: AppColors.ink,
+                            color: AppColors.surfaceElevated,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

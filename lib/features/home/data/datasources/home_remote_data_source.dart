@@ -97,11 +97,11 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
     // TODO(jrilym): Source Daily Qira and recommendation from backend contract.
     return HomeSummary(
       dailyQira: const DailyQira(
-        id: 'daily_ad_dhuha_1',
-        surahName: 'Ad-Dhuha',
-        ayahLabel: 'Ayat 1',
-        arabicText: 'وَالضُّحَىٰ',
-        translation: 'Demi waktu duha.',
+        id: 'daily_al_fatihah_4',
+        surahName: 'Al-Fatihah',
+        ayahLabel: 'Ayat 4 dari 7',
+        arabicText: 'مَالِكِ يَوْمِ الدِّينِ',
+        translation: 'Pemilik hari pembalasan.',
         reciter: 'Syaikh Mishary Rashid',
         estimatedMinutes: 5,
       ),
@@ -121,8 +121,8 @@ class MockHomeRemoteDataSource implements HomeRemoteDataSource {
       continuePractice: const ContinuePractice(
         practiceId: 'al_fatihah_1',
         surahName: 'Al-Fatihah',
-        ayahLabel: 'Frasa 1 dari 3',
-        lastMatch: 78,
+        ayahLabel: 'Ayat 1-3',
+        lastMatch: 96,
       ),
       recommendation: const AiRecommendation(
         practiceId: 'ad_dhuha_1',

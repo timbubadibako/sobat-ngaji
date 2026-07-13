@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme.dart';
 import '../../../../core/errors/app_failure.dart';
+import '../../../../features/auth/presentation/controllers/auth_controller.dart';
 import '../../../../shared/widgets/state_views.dart';
 import '../../domain/entities/home_summary.dart';
 import '../controllers/home_controller.dart';
-import '../widgets/ai_greeting_card.dart';
 import '../widgets/ai_recommendation_preview.dart';
 import '../widgets/continue_practice_card.dart';
 import '../widgets/daily_qira_hero.dart';
@@ -56,61 +56,133 @@ class _HomeContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authControllerProvider).valueOrNull?.user;
+
     return RefreshIndicator(
       onRefresh: () => ref.read(homeControllerProvider.notifier).refresh(),
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
-          const _HomeIntro(),
+          _HomeIntro(userName: user?.name ?? 'Ahmad'),
           const SizedBox(height: AppSpacing.md),
           DailyQiraHero(
             dailyQira: summary.dailyQira,
-            onStart: () => context.go('/practice'),
+            continuePractice: summary.continuePractice,
+            onStart: () => _openPractice(context, summary.continuePractice),
           ),
-          const SizedBox(height: AppSpacing.md),
-          AiGreetingCard(greeting: summary.greeting),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.lg),
+          const _SectionTitle('Weekly Progress'),
+          const SizedBox(height: AppSpacing.xs),
           WeeklySnapshotCard(snapshot: summary.weeklySnapshot),
-          if (summary.continuePractice != null) ...[
-            const SizedBox(height: AppSpacing.md),
-            ContinuePracticeCard(
-              item: summary.continuePractice!,
-              onContinue: () => context.go('/practice'),
-            ),
-          ],
-          if (summary.recommendation != null) ...[
-            const SizedBox(height: AppSpacing.md),
-            AiRecommendationPreview(
-              recommendation: summary.recommendation!,
-              onOpen: () => context.go('/practice'),
-            ),
-          ],
+          const SizedBox(height: AppSpacing.lg),
+          const _SectionTitle('Latihan Terakhir'),
+          const SizedBox(height: AppSpacing.xs),
+          ContinuePracticeCard(
+            item: summary.continuePractice,
+            fallbackDailyQira: summary.dailyQira,
+            onContinue: () => _openPractice(context, summary.continuePractice),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const _SectionTitle('AI Insight'),
+          const SizedBox(height: AppSpacing.xs),
+          AiRecommendationPreview(
+            greeting: summary.greeting,
+            recommendation: summary.recommendation,
+            onOpen: () => context.go('/insight'),
+          ),
         ],
       ),
+    );
+  }
+
+  void _openPractice(BuildContext context, ContinuePractice? item) {
+    final practiceId = item?.practiceId;
+    context.go(
+      practiceId == null || practiceId.isEmpty
+          ? '/practice'
+          : '/practice/$practiceId',
     );
   }
 }
 
 class _HomeIntro extends StatelessWidget {
-  const _HomeIntro();
+  const _HomeIntro({required this.userName});
+
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Home',
-          style: theme.textTheme.labelMedium?.copyWith(
-            color: AppColors.teal,
-            fontWeight: FontWeight.w700,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Selamat pagi, $userName',
+                style: theme.textTheme.headlineMedium,
+              ),
+              const SizedBox(height: AppSpacing.xxs),
+              Text(
+                'Siap lanjut latihan hari ini?',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.ink,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: AppSpacing.xxs),
-        Text('Latihan hari ini', style: theme.textTheme.headlineMedium),
+        Semantics(
+          label: 'Streak 7 hari',
+          child: Container(
+            height: 42,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.navy,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.ink.withValues(alpha: 0.08),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '7',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: AppColors.surfaceElevated,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.xxs),
+                const Icon(
+                  Icons.local_fire_department_rounded,
+                  size: 20,
+                  color: AppColors.warning,
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle(this.title);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(title, style: Theme.of(context).textTheme.titleLarge);
   }
 }

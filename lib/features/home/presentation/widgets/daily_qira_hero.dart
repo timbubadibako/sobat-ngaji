@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import '../../../../app/theme.dart';
 import '../../domain/entities/home_summary.dart';
 
-/// The strongest visual element on the first viewport: Daily Qira.
-///
-/// Treats Arabic text as the primary artifact with generous spacing and
-/// strong contrast against a calm brand gradient.
+/// Strong Home hero that answers the next learning action.
 class DailyQiraHero extends StatelessWidget {
   const DailyQiraHero({
     required this.dailyQira,
+    required this.continuePractice,
     required this.onStart,
     super.key,
   });
 
   final DailyQira dailyQira;
+  final ContinuePractice? continuePractice;
   final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    const progressPercent = 57;
+    const progress = progressPercent / 100;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -30,160 +32,138 @@ class DailyQiraHero extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [AppColors.navy, AppColors.navy2],
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.ink.withValues(alpha: 0.14),
+            blurRadius: 42,
+            offset: const Offset(0, 18),
+          ),
+        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              const _HeroTag(label: 'Daily Qira'),
-              const Spacer(),
-              Text(
-                'AI has prepared today\'s practice.',
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: AppColors.surfaceElevated.withValues(alpha: 0.72),
-                ),
+          Positioned(
+            top: -22,
+            right: 0,
+            child: Text(
+              'ض',
+              style: TextStyle(
+                color: AppColors.surfaceElevated.withValues(alpha: 0.08),
+                fontSize: 132,
+                height: 1,
+                fontWeight: FontWeight.w700,
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            '${dailyQira.surahName} · ${dailyQira.ayahLabel}',
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: AppColors.aqua,
-              letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: AppSpacing.sm),
-          // Arabic display: 34/52, primary artifact, right-aligned.
-          Text(
-            dailyQira.arabicText,
-            textAlign: TextAlign.right,
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(
-              fontSize: 34,
-              height: 52 / 34,
-              color: AppColors.surfaceElevated,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            dailyQira.translation,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.surfaceElevated.withValues(alpha: 0.72),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Wrap(
-            spacing: AppSpacing.xs,
-            runSpacing: AppSpacing.xs,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _HeroMetaChip(
-                icon: Icons.schedule_outlined,
-                label: '${dailyQira.estimatedMinutes} min',
-              ),
-              const _HeroMetaChip(
-                icon: Icons.auto_awesome,
-                label: 'Medium AI Confidence',
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              Icon(
-                Icons.record_voice_over_outlined,
-                size: 16,
-                color: AppColors.surfaceElevated.withValues(alpha: 0.7),
-              ),
-              const SizedBox(width: AppSpacing.xxs),
-              Expanded(
-                child: Text(
-                  'Focus letter: ض. ${dailyQira.reciter}',
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: AppColors.surfaceElevated.withValues(alpha: 0.72),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.xs,
+                    vertical: AppSpacing.xxs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.aqua.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
+                  child: Text(
+                    'CONTINUE LEARNING',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: AppColors.aqua,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.6,
+                    ),
                   ),
                 ),
               ),
-              FilledButton.icon(
-                onPressed: onStart,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.aqua,
-                  foregroundColor: AppColors.ink,
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                dailyQira.surahName,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  color: AppColors.surfaceElevated,
+                  fontWeight: FontWeight.w800,
                 ),
-                icon: const Icon(Icons.play_arrow_rounded),
-                label: const Text('Mulai'),
+              ),
+              Text(
+                dailyQira.ayahLabel,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.surfaceElevated.withValues(alpha: 0.72),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                dailyQira.arabicText,
+                textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                style: const TextStyle(
+                  fontSize: 30,
+                  height: 44 / 30,
+                  color: AppColors.surfaceElevated,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 10,
+                  backgroundColor: AppColors.surfaceElevated.withValues(
+                    alpha: 0.14,
+                  ),
+                  valueColor: const AlwaysStoppedAnimation(AppColors.aqua),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Row(
+                children: [
+                  Text(
+                    'Terakhir latihan: Hari ini',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: AppColors.surfaceElevated.withValues(alpha: 0.72),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '$progressPercent%',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: AppColors.aqua,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Lanjutkan dari titik terakhir, lalu rekam bacaan untuk evaluasi awal.',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: AppColors.surfaceElevated.withValues(
+                          alpha: 0.72,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  FilledButton.icon(
+                    onPressed: onStart,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.aqua,
+                      foregroundColor: AppColors.ink,
+                    ),
+                    icon: const Icon(Icons.play_arrow_rounded),
+                    label: const Text('Lanjutkan'),
+                  ),
+                ],
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HeroMetaChip extends StatelessWidget {
-  const _HeroMetaChip({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.xs,
-        vertical: AppSpacing.xs,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceElevated.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: AppColors.surfaceElevated.withValues(alpha: 0.12),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: AppColors.aqua),
-          const SizedBox(width: AppSpacing.xxs),
-          Text(
-            label,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: AppColors.surfaceElevated,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeroTag extends StatelessWidget {
-  const _HeroTag({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.xs,
-        vertical: AppSpacing.xxs,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceElevated.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: AppColors.surfaceElevated,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

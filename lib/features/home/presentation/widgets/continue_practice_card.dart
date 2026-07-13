@@ -8,28 +8,43 @@ import '../../domain/entities/home_summary.dart';
 class ContinuePracticeCard extends StatelessWidget {
   const ContinuePracticeCard({
     required this.item,
+    required this.fallbackDailyQira,
     required this.onContinue,
     super.key,
   });
 
-  final ContinuePractice item;
+  final ContinuePractice? item;
+  final DailyQira fallbackDailyQira;
   final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final activeItem = item;
+    final surahName = activeItem?.surahName ?? fallbackDailyQira.surahName;
+    final ayahLabel = activeItem?.ayahLabel ?? fallbackDailyQira.ayahLabel;
+    final match = activeItem?.lastMatch ?? 96;
+    final cer = (100 - match).clamp(0, 100);
+
     return AppCard(
       onTap: onContinue,
+      borderColor: AppColors.aqua.withValues(alpha: 0.28),
+      elevation: 2,
+      shadowColor: AppColors.ink.withValues(alpha: 0.14),
       child: Row(
         children: [
           Container(
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.surfaceMuted,
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.aqua, AppColors.cyan],
+              ),
               borderRadius: BorderRadius.circular(AppRadius.medium),
             ),
-            child: const Icon(Icons.play_arrow_rounded, color: AppColors.teal),
+            child: const Icon(Icons.menu_book_rounded, color: AppColors.navy),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -37,27 +52,26 @@ class ContinuePracticeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Lanjutkan frasa terakhir',
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: AppColors.teal,
-                    fontWeight: FontWeight.w700,
+                  surahName,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: AppColors.ink,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xxs),
+                Text(ayahLabel, style: theme.textTheme.labelMedium),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
-                  '${item.surahName} · ${item.ayahLabel}',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
+                  'CER $cer%       Kemiripan $match%',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: AppColors.teal,
+                    fontWeight: FontWeight.w800,
                   ),
-                ),
-                Text(
-                  'Kecocokan terakhir ${item.lastMatch}%',
-                  style: theme.textTheme.labelMedium,
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.teal),
+          const Icon(Icons.chevron_right_rounded, color: AppColors.teal),
         ],
       ),
     );
