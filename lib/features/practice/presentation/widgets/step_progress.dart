@@ -18,20 +18,34 @@ class StepProgress extends StatelessWidget {
     return Row(
       children: List.generate(totalSteps * 2 - 1, (index) {
         if (index.isOdd) {
-          return const Expanded(
-            child: Divider(thickness: 2, color: AppColors.surfaceMuted),
+          final previousStep = index ~/ 2 + 1;
+          final done = previousStep < currentStep;
+          return Expanded(
+            child: Container(
+              height: 5,
+              decoration: BoxDecoration(
+                color: done ? AppColors.aqua : AppColors.surfaceMuted,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+              ),
+            ),
           );
         }
 
         final step = index ~/ 2 + 1;
         final active = step <= currentStep;
-        return CircleAvatar(
-          radius: 14,
-          backgroundColor: active ? AppColors.teal : AppColors.surfaceMuted,
+        return Container(
+          width: 28,
+          height: 28,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: active ? AppColors.aqua : AppColors.surfaceMuted,
+          ),
           child: Text(
             '$step',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: active ? AppColors.surfaceElevated : AppColors.ink,
+              color: active ? AppColors.navy : AppColors.muted,
+              fontWeight: FontWeight.w900,
             ),
           ),
         );

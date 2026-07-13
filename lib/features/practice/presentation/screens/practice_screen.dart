@@ -50,12 +50,7 @@ class _PracticeContent extends ConsumerWidget {
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
-          Text('Practice', style: Theme.of(context).textTheme.headlineMedium),
-          const SizedBox(height: AppSpacing.xxs),
-          Text(
-            'Pilih frasa pendek untuk latihan terarah.',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+          const _PracticeHeader(),
           const SizedBox(height: AppSpacing.md),
           PracticeSearchBar(
             onChanged: ref.read(practiceControllerProvider.notifier).search,
@@ -79,30 +74,17 @@ class _PracticeContent extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          AppCard(
-            color: AppColors.surfaceSoft,
-            child: Row(
-              children: [
-                const CircleAvatar(
-                  backgroundColor: AppColors.aqua,
-                  child: Icon(Icons.auto_awesome, color: AppColors.ink),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Text(
-                    'AI menyarankan mulai dari Ad-Dhuha untuk latihan huruf ض.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const _PracticeAiRecommendation(),
           const SizedBox(height: AppSpacing.md),
           SectionHeader(
-            title: 'Curated phrases',
-            actionLabel: '${visibleItems.length} items',
+            title: 'Frasa kurasi',
+            actionLabel: '${visibleItems.length} butir',
             onAction: () {},
           ),
+          const SizedBox(height: AppSpacing.sm),
+          const SectionHeader(title: 'Progres latihan'),
+          const SizedBox(height: AppSpacing.xs),
+          const StepProgress(currentStep: 1, totalSteps: 4),
           const SizedBox(height: AppSpacing.xs),
           if (visibleItems.isEmpty)
             const EmptyState(
@@ -119,8 +101,118 @@ class _PracticeContent extends ConsumerWidget {
                 ),
               ),
             ),
-          const SizedBox(height: AppSpacing.md),
-          const StepProgress(currentStep: 1, totalSteps: 4),
+        ],
+      ),
+    );
+  }
+}
+
+class _PracticeHeader extends StatelessWidget {
+  const _PracticeHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Latihan', style: theme.textTheme.headlineMedium),
+              const SizedBox(height: AppSpacing.xxs),
+              Text(
+                'Pilih frasa pendek untuk latihan terarah.',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.muted,
+                ),
+              ),
+            ],
+          ),
+        ),
+        IconButton.filledTonal(
+          onPressed: () {},
+          style: IconButton.styleFrom(
+            backgroundColor: AppColors.surfaceElevated,
+            foregroundColor: AppColors.navy,
+            shadowColor: AppColors.ink.withValues(alpha: 0.14),
+            elevation: 2,
+          ),
+          icon: const Icon(Icons.tune_rounded),
+          tooltip: 'Filter latihan',
+        ),
+      ],
+    );
+  }
+}
+
+class _PracticeAiRecommendation extends StatelessWidget {
+  const _PracticeAiRecommendation();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return AppCard(
+      borderColor: AppColors.aqua.withValues(alpha: 0.38),
+      elevation: 2,
+      shadowColor: AppColors.ink.withValues(alpha: 0.14),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.aqua, AppColors.cyan],
+              ),
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+            ),
+            child: const Text(
+              'AI',
+              style: TextStyle(
+                color: AppColors.navy,
+                fontWeight: FontWeight.w900,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Rekomendasi',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: AppColors.teal,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.4,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  'Mulai dari Ad-Dhuha.',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  'Frasa ini cocok untuk fokus huruf ض dan tempo pendek sebelum latihan yang lebih panjang.',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.muted,
+                    height: 1.45,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

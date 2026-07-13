@@ -59,9 +59,11 @@ void main() {
     expect(find.text('CONTINUE LEARNING'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Practice'));
-    await _pumpUntilFound(tester, find.text('Curated phrases'));
-    expect(find.text('Curated phrases'), findsOneWidget);
+    await _pumpUntilFound(tester, find.text('Frasa kurasi'));
+    expect(find.text('Frasa kurasi'), findsOneWidget);
 
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -260));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Ad-Dhuha').first);
     await _pumpUntilFound(tester, find.text('Dengar referensi'));
     expect(find.text('Dengar referensi'), findsOneWidget);
@@ -89,8 +91,8 @@ void main() {
     await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(-280, 0));
-    await _pumpUntilFound(tester, find.text('Curated phrases'));
-    expect(find.text('Curated phrases'), findsOneWidget);
+    await _pumpUntilFound(tester, find.text('Frasa kurasi'));
+    expect(find.text('Frasa kurasi'), findsOneWidget);
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(280, 0));
     await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));

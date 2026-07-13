@@ -21,9 +21,14 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Practice'), findsOneWidget);
-    expect(find.text('Curated phrases'), findsOneWidget);
+    expect(find.text('Latihan'), findsOneWidget);
+    expect(find.text('Frasa kurasi'), findsOneWidget);
+    expect(find.text('Progres latihan'), findsOneWidget);
     expect(find.text('Ad-Dhuha'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -320));
+    await tester.pumpAndSettle();
+
     expect(find.text('Al-Fatihah'), findsOneWidget);
   });
 

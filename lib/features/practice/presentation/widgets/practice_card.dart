@@ -17,20 +17,24 @@ class PracticeCard extends StatelessWidget {
 
     return AppCard(
       onTap: onTap,
+      borderColor: AppColors.line,
+      elevation: 1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Row(
         children: [
           Container(
-            width: 46,
-            height: 46,
+            width: 44,
+            height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.surfaceMuted,
+              color: AppColors.aqua.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(AppRadius.medium),
             ),
             child: Text(
               '${item.surahNumber}',
-              style: theme.textTheme.titleLarge?.copyWith(
+              style: theme.textTheme.titleMedium?.copyWith(
                 color: AppColors.teal,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
@@ -42,8 +46,10 @@ class PracticeCard extends StatelessWidget {
                 Text(item.surahName, style: theme.textTheme.titleLarge),
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
-                  '${item.ayahLabel} · ${item.estimatedMinutes} min · ${item.focus}',
-                  style: theme.textTheme.labelMedium,
+                  '${item.ayahLabel} · ${item.level.toLowerCase()} · ${item.estimatedMinutes} min',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: AppColors.muted,
+                  ),
                 ),
               ],
             ),
