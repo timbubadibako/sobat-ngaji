@@ -12,6 +12,7 @@ import '../features/practice/practice.dart';
 import '../features/profile/profile.dart';
 import '../features/recording/recording.dart';
 import 'app_shell.dart';
+import '../core/config/app_config.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final refreshListenable = ref.watch(_authRouteRefreshProvider);
@@ -23,9 +24,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       final authState = ref.read(authControllerProvider);
       final location = state.uri.path;
       final isAuthRoute = location == '/login' || location == '/signup';
+      final isSplashRoute = location == '/splash';
+
+      if (AppConfig.authBypassEnabled) {
+        return isSplashRoute || isAuthRoute ? '/home' : null;
+      }
 
       return authState.when(
-        loading: () => location == '/splash' ? null : '/splash',
+        loading: () => isSplashRoute ? null : '/splash',
         error: (_, _) => isAuthRoute ? null : '/login',
         data: (session) {
           final isAuthenticated = session != null;
@@ -34,7 +40,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             return isAuthRoute ? null : '/login';
           }
 
-          if (location == '/splash' || isAuthRoute) {
+          if (isSplashRoute || isAuthRoute) {
             return '/home';
           }
 
