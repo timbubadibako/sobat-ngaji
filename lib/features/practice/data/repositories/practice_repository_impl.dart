@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/config/app_config.dart';
 import '../../../../core/errors/app_failure.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/practice_item.dart';
@@ -44,6 +45,10 @@ class PracticeRepositoryImpl implements PracticeRepository {
 final practiceLocalDataSourceProvider = Provider<PracticeLocalDataSource>((
   ref,
 ) {
+  if (AppConfig.mockDataEnabled) {
+    return const MockPracticeLocalDataSource();
+  }
+
   return BackendPracticeDataSource(ref.watch(apiClientProvider));
 });
 

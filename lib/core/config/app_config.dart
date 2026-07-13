@@ -8,4 +8,13 @@ abstract final class AppConfig {
     'SOBAT_NGAJI_AUTH_BYPASS',
     defaultValue: true,
   );
+
+  /// Temporary demo mode: use local mock feature data instead of backend calls.
+  ///
+  /// Disable with:
+  /// `--dart-define=SOBAT_NGAJI_MOCK_DATA=false`
+  static const mockDataEnabled = bool.fromEnvironment(
+    'SOBAT_NGAJI_MOCK_DATA',
+    defaultValue: true,
+  );
 }
