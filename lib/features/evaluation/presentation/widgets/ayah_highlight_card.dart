@@ -13,10 +13,13 @@ class AyahHighlightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ayah highlight', style: Theme.of(context).textTheme.titleLarge),
+          Text('Highlight ayat', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
             textDirection: TextDirection.rtl,

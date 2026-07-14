@@ -15,6 +15,9 @@ class ScoreCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Row(
         children: [
           ScoreRing(score: result.matchScore),
@@ -68,7 +71,7 @@ class ScoreRing extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('$score', style: Theme.of(context).textTheme.headlineMedium),
-              Text('match', style: Theme.of(context).textTheme.labelMedium),
+              Text('kecocokan', style: Theme.of(context).textTheme.labelMedium),
             ],
           ),
         ],

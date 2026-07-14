@@ -13,13 +13,22 @@ class AiSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
-      color: AppColors.surfaceMuted,
+      borderColor: AppColors.aqua.withValues(alpha: 0.38),
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CircleAvatar(
-            backgroundColor: AppColors.aqua,
-            child: Icon(Icons.auto_awesome, color: AppColors.ink),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              gradient: const LinearGradient(
+                colors: [AppColors.aqua, AppColors.cyan],
+              ),
+            ),
+            child: const Icon(Icons.auto_awesome, color: AppColors.ink),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -28,7 +37,10 @@ class AiSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   'Recommendation',
-                  style: Theme.of(context).textTheme.labelMedium,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: AppColors.teal,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.xxs),
                 Text(

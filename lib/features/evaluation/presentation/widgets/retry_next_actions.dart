@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/theme.dart';
+
 /// Retry recording or continue to Insight.
 class RetryNextActions extends StatelessWidget {
   const RetryNextActions({
@@ -19,15 +21,15 @@ class RetryNextActions extends StatelessWidget {
           child: FilledButton.tonalIcon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: const Text('Ulangi'),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: FilledButton.icon(
             onPressed: onNext,
             icon: const Icon(Icons.insights),
-            label: const Text('Next'),
+            label: const Text('Lanjut'),
           ),
         ),
       ],
