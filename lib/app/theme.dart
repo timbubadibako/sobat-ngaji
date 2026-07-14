@@ -134,6 +134,14 @@ abstract final class AppRadius {
   static const pill = 999.0;
 }
 
+/// App elevation tokens.
+abstract final class AppElevation {
+  static const level0 = 0.0;
+  static const level1 = 1.0;
+  static const level2 = 3.0;
+  static const level3 = 6.0;
+}
+
 /// App motion tokens that mirror docs/DesignTokens.md.
 abstract final class AppMotion {
   static const fast = Duration(milliseconds: 160);
