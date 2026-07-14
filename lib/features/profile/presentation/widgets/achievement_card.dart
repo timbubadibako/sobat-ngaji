@@ -12,6 +12,9 @@ class AchievementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
+      borderColor: AppColors.warning.withValues(alpha: 0.42),
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.08),
       child: Row(
         children: [
           const Icon(Icons.emoji_events_outlined, color: AppColors.warning),

@@ -4,7 +4,7 @@ import '../../../../app/theme.dart';
 import '../../../../shared/widgets/app_card.dart';
 import '../../domain/entities/profile_summary.dart';
 
-/// AI learning summary and small stats.
+/// AI learning summary small stats.
 class LearningSummaryCard extends StatelessWidget {
   const LearningSummaryCard({required this.profile, super.key});
 
@@ -13,53 +13,47 @@ class LearningSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
-      color: AppColors.surfaceMuted,
-      child: Column(
+      borderColor: AppColors.aqua.withValues(alpha: 0.38),
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: AppColors.aqua,
-                child: Icon(Icons.auto_awesome, color: AppColors.ink),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              gradient: const LinearGradient(
+                colors: [AppColors.aqua, AppColors.cyan],
               ),
-              const SizedBox(width: AppSpacing.sm),
-              Text(
-                'Learning Summary',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ],
+            ),
+            child: const Icon(Icons.auto_awesome, color: AppColors.ink),
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(profile.learningSummary),
-          const SizedBox(height: AppSpacing.sm),
-          Row(
-            children: [
-              _Stat(value: '${profile.totalSessions}', label: 'Total sesi'),
-              _Stat(value: '${profile.averageScore}%', label: 'Avg score'),
-              _Stat(value: profile.focusLetter, label: 'Focus'),
-            ],
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Target latihan',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: AppColors.teal,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(profile.learningSummary),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Fokus huruf ${profile.focusLetter}',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w800),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Stat extends StatelessWidget {
-  const _Stat({required this.value, required this.label});
-
-  final String value;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(value, style: Theme.of(context).textTheme.titleLarge),
-          Text(label, style: Theme.of(context).textTheme.labelMedium),
         ],
       ),
     );

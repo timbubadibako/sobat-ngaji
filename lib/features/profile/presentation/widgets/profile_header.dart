@@ -18,40 +18,87 @@ class ProfileHeader extends StatelessWidget {
     final initial = name.trim().isEmpty ? 'S' : name.trim()[0].toUpperCase();
 
     return AppCard(
-      child: Row(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
+      child: Column(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: AppColors.navy,
-            child: Text(
-              initial,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppColors.surfaceElevated,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name, style: Theme.of(context).textTheme.titleLarge),
-                Text(
-                  'Beginner track · Juz 30 focus',
-                  style: Theme.of(context).textTheme.bodyMedium,
+          Row(
+            children: [
+              Container(
+                width: 72,
+                height: 72,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.hero),
+                  gradient: const LinearGradient(
+                    colors: [AppColors.aqua, AppColors.cyan],
+                  ),
                 ),
-                const SizedBox(height: AppSpacing.xs),
-                Wrap(
-                  spacing: AppSpacing.xs,
+                child: Text(
+                  initial,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: AppColors.navy,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Chip(label: Text('${profile.streakDays} day streak')),
-                    const Chip(label: Text('AI companion')),
+                    Text(name, style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      'Pemula · ${profile.streakDays} hari beruntun',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            children: [
+              _HeaderStat(value: '${profile.streakDays}', label: 'Streak'),
+              const SizedBox(width: AppSpacing.xs),
+              _HeaderStat(value: '${profile.totalSessions}', label: 'Sesi'),
+              const SizedBox(width: AppSpacing.xs),
+              _HeaderStat(value: '${profile.averageScore}', label: 'Rata-rata'),
+            ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HeaderStat extends StatelessWidget {
+  const _HeaderStat({required this.value, required this.label});
+
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.surfaceSoft,
+          borderRadius: BorderRadius.circular(AppRadius.medium),
+          border: Border.all(color: AppColors.line),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.xs),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(value, style: Theme.of(context).textTheme.titleLarge),
+              Text(label, style: Theme.of(context).textTheme.labelMedium),
+            ],
+          ),
+        ),
       ),
     );
   }
