@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme.dart';
 import '../../../../features/practice/presentation/controllers/practice_controller.dart';
+import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/aqua_screen_scaffold.dart';
 import '../../../../shared/widgets/state_views.dart';
 import '../../domain/entities/recording_state.dart';
 import '../controllers/recording_controller.dart';
@@ -22,71 +24,173 @@ class RecordingScreen extends ConsumerWidget {
     final itemState = ref.watch(practiceItemProvider(practiceId));
     final recordingState = ref.watch(recordingControllerProvider);
 
-    return Scaffold(
-      body: SafeArea(
-        child: itemState.when(
-          loading: () => const LoadingState(message: 'Menyiapkan rekaman...'),
-          error: (error, _) => ErrorStateView(error: error),
-          data: (item) => ListView(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => context.go('/practice/${item.id}'),
-                    icon: const Icon(Icons.arrow_back),
+    return AquaScreenScaffold(
+      child: itemState.when(
+        loading: () => const LoadingState(message: 'Menyiapkan rekaman...'),
+        error: (error, _) => ErrorStateView(error: error),
+        data: (item) => ListView(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => context.go('/practice/${item.id}'),
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                Expanded(
+                  child: Text(
+                    'Recording',
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  Expanded(
-                    child: Text(
-                      'Recording',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ),
-                  const _SocketBadge(),
-                ],
+                ),
+                const _SocketBadge(),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            _RecordingAyahHero(
+              arabicText: item.arabicText,
+              meta: '${item.surahName} · ${item.ayahLabel} · ${item.focus}',
+            ),
+            const SizedBox(height: AppSpacing.md),
+            const _ReferenceAudioCard(),
+            const SizedBox(height: AppSpacing.md),
+            if (recordingState.status == RecordingStatus.permissionRequired)
+              MicrophonePermissionCard(message: recordingState.message)
+            else
+              RecordingPanel(
+                state: recordingState,
+                onStart: () => ref
+                    .read(recordingControllerProvider.notifier)
+                    .start(item.id),
+                onStop: () =>
+                    ref.read(recordingControllerProvider.notifier).stop(),
+                onRetry: () =>
+                    ref.read(recordingControllerProvider.notifier).reset(),
+                onContinue: () => context.go('/evaluation/${item.id}'),
               ),
+            const SizedBox(height: AppSpacing.md),
+            RealtimeEventList(
+              sessionId: recordingState.sessionId ?? 'session_pending',
+              events: recordingState.events,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            const _AiListeningCard(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RecordingAyahHero extends StatelessWidget {
+  const _RecordingAyahHero({required this.arabicText, required this.meta});
+
+  final String arabicText;
+  final String meta;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      color: AppColors.navy,
+      borderColor: AppColors.cyan.withValues(alpha: 0.28),
+      elevation: AppElevation.level2,
+      shadowColor: AppColors.navy.withValues(alpha: 0.24),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -8,
+            top: -28,
+            child: Text(
+              'ض',
+              style: TextStyle(
+                fontSize: 120,
+                height: 1,
+                color: AppColors.surfaceElevated.withValues(alpha: 0.07),
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _SoftBadge(label: 'Ayat latihan'),
               const SizedBox(height: AppSpacing.md),
               Text(
-                item.arabicText,
+                arabicText,
                 textAlign: TextAlign.right,
                 textDirection: TextDirection.rtl,
                 style: const TextStyle(
                   fontSize: 34,
                   height: 52 / 34,
-                  color: AppColors.ink,
-                  fontWeight: FontWeight.w600,
+                  color: AppColors.surfaceElevated,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                '${item.surahName} · ${item.ayahLabel} · ${item.focus}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              if (recordingState.status == RecordingStatus.permissionRequired)
-                MicrophonePermissionCard(message: recordingState.message)
-              else
-                RecordingPanel(
-                  state: recordingState,
-                  onStart: () => ref
-                      .read(recordingControllerProvider.notifier)
-                      .start(item.id),
-                  onStop: () =>
-                      ref.read(recordingControllerProvider.notifier).stop(),
-                  onRetry: () =>
-                      ref.read(recordingControllerProvider.notifier).reset(),
-                  onContinue: () => context.go('/evaluation/${item.id}'),
+                meta,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.surfaceElevated.withValues(alpha: 0.74),
                 ),
-              const SizedBox(height: AppSpacing.md),
-              RealtimeEventList(
-                sessionId: recordingState.sessionId ?? 'session_pending',
-                events: recordingState.events,
               ),
-              const SizedBox(height: AppSpacing.md),
-              const _AiListeningCard(),
             ],
           ),
-        ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReferenceAudioCard extends StatelessWidget {
+  const _ReferenceAudioCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.12),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: const BoxDecoration(
+              color: AppColors.navy,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.play_arrow_rounded, color: Colors.white),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Audio referensi',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  child: const LinearProgressIndicator(
+                    value: 0.62,
+                    minHeight: 6,
+                    backgroundColor: AppColors.surfaceMuted,
+                    valueColor: AlwaysStoppedAnimation(AppColors.aqua),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  '0:14 / 0:33',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -100,6 +204,7 @@ class _SocketBadge extends StatelessWidget {
     return Chip(
       label: const Text('WebSocket'),
       backgroundColor: AppColors.aqua.withValues(alpha: 0.18),
+      side: const BorderSide(color: AppColors.aqua),
     );
   }
 }
@@ -109,24 +214,60 @@ class _AiListeningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.sm),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundColor: AppColors.aqua,
-              child: Icon(Icons.auto_awesome, color: AppColors.ink),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Text(
-                'AI listening: jaga tempo tetap stabil. Evaluasi awal muncul setelah rekaman diproses.',
-                style: Theme.of(context).textTheme.bodyMedium,
+    return AppCard(
+      borderColor: AppColors.aqua.withValues(alpha: 0.38),
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              gradient: const LinearGradient(
+                colors: [AppColors.aqua, AppColors.cyan],
               ),
             ),
-          ],
+            child: const Icon(Icons.auto_awesome, color: AppColors.ink),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              'AI listening: jaga tempo tetap stabil. Evaluasi awal muncul setelah rekaman diproses.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SoftBadge extends StatelessWidget {
+  const _SoftBadge({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceElevated.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.xs,
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: AppColors.aqua,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );

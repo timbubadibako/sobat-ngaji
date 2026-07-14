@@ -20,6 +20,9 @@ class RealtimeEventList extends StatelessWidget {
     final theme = Theme.of(context);
 
     return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +49,20 @@ class RealtimeEventList extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.xs),
                 child: Row(
                   children: [
-                    const Icon(Icons.circle, size: 10, color: AppColors.teal),
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: AppColors.aqua,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.aqua.withValues(alpha: 0.26),
+                            blurRadius: 12,
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Column(

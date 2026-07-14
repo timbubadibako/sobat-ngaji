@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme.dart';
+import '../../../../shared/widgets/app_card.dart';
 import '../../domain/entities/recording_state.dart';
 import 'waveform.dart';
 
@@ -26,36 +27,37 @@ class RecordingPanel extends StatelessWidget {
     final status = state.status;
     final isRecording = status == RecordingStatus.recording;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          children: [
-            RecordingTimer(duration: state.duration),
-            const SizedBox(height: AppSpacing.md),
-            RecordButton(
-              isRecording: isRecording,
-              onPressed: isRecording ? onStop : onStart,
+    return AppCard(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.12),
+      child: Column(
+        children: [
+          RecordingTimer(duration: state.duration),
+          const SizedBox(height: AppSpacing.md),
+          RecordButton(
+            isRecording: isRecording,
+            onPressed: isRecording ? onStop : onStart,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Waveform(active: isRecording),
+          const SizedBox(height: AppSpacing.md),
+          Text(_statusLabel(status), textAlign: TextAlign.center),
+          const SizedBox(height: AppSpacing.sm),
+          if (status == RecordingStatus.completed)
+            FilledButton.icon(
+              onPressed: onContinue,
+              icon: const Icon(Icons.auto_awesome),
+              label: const Text('Lihat evaluasi awal'),
+            )
+          else if (status == RecordingStatus.failed)
+            FilledButton.tonalIcon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Coba rekam ulang'),
             ),
-            const SizedBox(height: AppSpacing.md),
-            Waveform(active: isRecording),
-            const SizedBox(height: AppSpacing.md),
-            Text(_statusLabel(status), textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.sm),
-            if (status == RecordingStatus.completed)
-              FilledButton.icon(
-                onPressed: onContinue,
-                icon: const Icon(Icons.auto_awesome),
-                label: const Text('Lihat evaluasi awal'),
-              )
-            else if (status == RecordingStatus.failed)
-              FilledButton.tonalIcon(
-                onPressed: onRetry,
-                icon: const Icon(Icons.refresh),
-                label: const Text('Coba rekam ulang'),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -91,8 +93,10 @@ class RecordButton extends StatelessWidget {
       onPressed: onPressed,
       style: FilledButton.styleFrom(
         shape: const CircleBorder(),
-        fixedSize: const Size.square(88),
+        fixedSize: const Size.square(108),
         backgroundColor: isRecording ? AppColors.error : AppColors.navy,
+        shadowColor: AppColors.error.withValues(alpha: 0.24),
+        elevation: AppElevation.level2,
       ),
       child: Icon(isRecording ? Icons.stop : Icons.mic, size: 34),
     );
