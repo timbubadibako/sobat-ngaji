@@ -18,6 +18,9 @@ class LetterMasteryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,11 +28,15 @@ class LetterMasteryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Letter mastery',
+                  'Penguasaan huruf',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              Text('Focus $focusLetter'),
+              Chip(
+                label: Text('Fokus $focusLetter'),
+                backgroundColor: AppColors.warningSoft,
+                side: const BorderSide(color: AppColors.warning),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -59,7 +66,12 @@ class LetterMasteryBar extends StatelessWidget {
           child: Text(
             item.letter,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 26, height: 34 / 26),
+            style: const TextStyle(
+              fontSize: 26,
+              height: 34 / 26,
+              color: AppColors.navy,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),

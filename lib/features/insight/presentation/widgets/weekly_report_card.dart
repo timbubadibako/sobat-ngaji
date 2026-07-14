@@ -15,7 +15,9 @@ class WeeklyReportCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return AppCard(
-      color: AppColors.surfaceSoft,
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +30,7 @@ class WeeklyReportCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
-                  'Weekly Report',
+                  'Aktivitas mingguan',
                   style: theme.textTheme.labelMedium,
                 ),
               ),
@@ -36,7 +38,7 @@ class WeeklyReportCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            'Performa meningkat ${insight.growthPercent}%.',
+            '${insight.practiceCount} sesi',
             style: theme.textTheme.titleLarge,
           ),
           const SizedBox(height: AppSpacing.xxs),

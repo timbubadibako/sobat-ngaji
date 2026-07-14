@@ -14,11 +14,15 @@ class SmartSuggestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppCard(
       color: AppColors.navy,
+      borderColor: AppColors.cyan.withValues(alpha: 0.28),
+      elevation: AppElevation.level2,
+      shadowColor: AppColors.navy.withValues(alpha: 0.22),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Smart Suggestion',
+            'AI menyarankan',
             style: Theme.of(
               context,
             ).textTheme.labelMedium?.copyWith(color: AppColors.aqua),
@@ -28,7 +32,7 @@ class SmartSuggestionCard extends StatelessWidget {
             suggestion,
             style: Theme.of(
               context,
-            ).textTheme.bodyLarge?.copyWith(color: AppColors.surfaceElevated),
+            ).textTheme.titleLarge?.copyWith(color: AppColors.surfaceElevated),
           ),
           const SizedBox(height: AppSpacing.sm),
           FilledButton.icon(

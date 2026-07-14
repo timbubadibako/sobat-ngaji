@@ -12,10 +12,13 @@ class WeeklyTrendChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Weekly trend', style: Theme.of(context).textTheme.titleLarge),
+          Text('Tren skor', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.sm),
           SizedBox(
             height: 120,
@@ -31,7 +34,11 @@ class WeeklyTrendChart extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            color: AppColors.cyan,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [AppColors.cyan, AppColors.teal],
+                            ),
                             borderRadius: BorderRadius.circular(
                               AppRadius.small,
                             ),
