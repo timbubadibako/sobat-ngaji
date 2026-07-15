@@ -33,7 +33,9 @@ void main() {
     expect(find.text('Masuk ke Sobat Ngaji'), findsNothing);
   });
 
-  testWidgets('authenticated app flow opens Practice detail', (tester) async {
+  testWidgets('authenticated app flow completes practice evaluation', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -68,6 +70,24 @@ void main() {
     await _pumpUntilFound(tester, find.text('Dengar referensi'));
     expect(find.text('Dengar referensi'), findsOneWidget);
     expect(find.text('وَالضُّحَىٰ'), findsOneWidget);
+
+    await tester.tap(find.text('Mulai rekam'));
+    await _pumpUntilFound(tester, find.text('Recording'));
+    expect(find.text('Recording'), findsOneWidget);
+
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -220));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithIcon(FilledButton, Icons.mic).first);
+    await _pumpUntilFound(tester, find.byIcon(Icons.stop));
+    await tester.tap(find.widgetWithIcon(FilledButton, Icons.stop).first);
+    await _pumpUntilFound(tester, find.text('Lihat evaluasi awal'));
+
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -180));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Lihat evaluasi awal'));
+    await _pumpUntilFound(tester, find.text('Evaluation'));
+    expect(find.text('Evaluation'), findsOneWidget);
+    expect(find.text('Evaluasi awal dari sesi bacaan.'), findsOneWidget);
   });
 
   testWidgets('top-level tabs can switch with horizontal swipe', (
@@ -91,12 +111,16 @@ void main() {
     await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(-280, 0));
+    await _pumpUntilFound(tester, find.text('Baca per halaman standar.'));
+    expect(find.text('Baca per halaman standar.'), findsOneWidget);
+
+    await tester.drag(find.byType(SobatNgajiApp), const Offset(-280, 0));
     await _pumpUntilFound(tester, find.text('Frasa kurasi'));
     expect(find.text('Frasa kurasi'), findsOneWidget);
 
     await tester.drag(find.byType(SobatNgajiApp), const Offset(280, 0));
-    await _pumpUntilFound(tester, find.text('CONTINUE LEARNING'));
-    expect(find.text('CONTINUE LEARNING'), findsOneWidget);
+    await _pumpUntilFound(tester, find.text('Baca per halaman standar.'));
+    expect(find.text('Baca per halaman standar.'), findsOneWidget);
   });
 }
 

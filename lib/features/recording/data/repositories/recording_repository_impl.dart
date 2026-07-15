@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/config/app_config.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/recording_state.dart';
 import '../../domain/repositories/recording_repository.dart';
@@ -27,6 +28,10 @@ class RecordingRepositoryImpl implements RecordingRepository {
 
   @override
   Future<String> createSession(String practiceId) async {
+    if (AppConfig.mockDataEnabled) {
+      return 'mock_session_$practiceId';
+    }
+
     try {
       final response = await client.post<Map<String, dynamic>>(
         '/practice-sessions',
