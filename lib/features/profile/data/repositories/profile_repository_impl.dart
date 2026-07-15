@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/errors/app_failure.dart';
+import '../../../../core/config/app_config.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/entities/profile_summary.dart';
 import '../../domain/repositories/profile_repository.dart';
@@ -14,6 +15,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<ProfileSummary> loadProfileSummary() async {
+    if (AppConfig.mockDataEnabled) {
+      return _mockProfileSummary();
+    }
+
     try {
       final response = await _client.get<Map<String, dynamic>>('/profile');
       return _profileFromJson(response.data ?? const {});
@@ -67,6 +72,35 @@ class ProfileRepositoryImpl implements ProfileRepository {
         icon: 'report',
       ),
     ];
+  }
+
+  ProfileSummary _mockProfileSummary() {
+    return const ProfileSummary(
+      totalSessions: 24,
+      averageScore: 87,
+      focusLetter: 'ض',
+      streakDays: 7,
+      learningSummary:
+          'Pertahankan latihan pendek harian. Fokus minggu ini adalah tempo dan makhraj ض.',
+      preferences: [
+        PreferenceItem(
+          title: 'Practice level',
+          value: 'beginner, phrases',
+          icon: 'tune',
+        ),
+        PreferenceItem(
+          title: 'Audio feedback',
+          value: 'Reference recording on',
+          icon: 'mic',
+        ),
+        PreferenceItem(
+          title: 'Daily report',
+          value: 'weekly_sunday',
+          icon: 'report',
+        ),
+      ],
+      achievement: 'Streak 7 hari aktif. Lanjutkan satu sesi pendek hari ini.',
+    );
   }
 }
 

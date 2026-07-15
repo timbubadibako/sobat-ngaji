@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app/theme.dart';
 import '../../../../features/auth/presentation/controllers/auth_controller.dart';
 import '../../../../shared/widgets/aqua_screen_scaffold.dart';
+import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/shimmer_skeleton.dart';
 import '../../../../shared/widgets/state_views.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/achievement_card.dart';
@@ -23,7 +25,7 @@ class ProfileScreen extends ConsumerWidget {
 
     return AquaScreenScaffold(
       child: profileState.when(
-        loading: () => const LoadingState(message: 'Memuat profile...'),
+        loading: () => const _ProfileSkeleton(),
         error: (error, _) => ListView(
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
@@ -77,6 +79,108 @@ class ProfileScreen extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ProfileSkeleton extends StatelessWidget {
+  const _ProfileSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerSkeleton(
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          AppSpacing.md,
+          AppSpacing.md,
+          128,
+        ),
+        children: const [
+          SkeletonBox(width: 116, height: 30, radius: AppRadius.medium),
+          SizedBox(height: AppSpacing.xs),
+          SkeletonBox(width: 214),
+          SizedBox(height: AppSpacing.md),
+          _ProfileHeaderSkeleton(),
+          SizedBox(height: AppSpacing.md),
+          _ProfileBlockSkeleton(height: 116),
+          SizedBox(height: AppSpacing.md),
+          SkeletonBox(width: 116, height: 24, radius: AppRadius.medium),
+          SizedBox(height: AppSpacing.xs),
+          _ProfileBlockSkeleton(height: 58),
+          SizedBox(height: AppSpacing.xs),
+          _ProfileBlockSkeleton(height: 58),
+          SizedBox(height: AppSpacing.xs),
+          _ProfileBlockSkeleton(height: 58),
+          SizedBox(height: AppSpacing.md),
+          _ProfileBlockSkeleton(height: 92),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileHeaderSkeleton extends StatelessWidget {
+  const _ProfileHeaderSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.08),
+      child: Column(
+        children: const [
+          Row(
+            children: [
+              SkeletonBox(width: 72, height: 72, radius: AppRadius.hero),
+              SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SkeletonBox(width: 136, height: 22),
+                    SizedBox(height: AppSpacing.xs),
+                    SkeletonBox(width: 178),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppSpacing.sm),
+          Row(
+            children: [
+              Expanded(
+                child: SkeletonBox(height: 60, radius: AppRadius.medium),
+              ),
+              SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: SkeletonBox(height: 60, radius: AppRadius.medium),
+              ),
+              SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: SkeletonBox(height: 60, radius: AppRadius.medium),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileBlockSkeleton extends StatelessWidget {
+  const _ProfileBlockSkeleton({required this.height});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      borderColor: AppColors.line,
+      elevation: AppElevation.level1,
+      shadowColor: AppColors.ink.withValues(alpha: 0.08),
+      child: SizedBox(height: height),
     );
   }
 }
