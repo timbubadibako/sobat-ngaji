@@ -8,6 +8,7 @@ import '../features/auth/domain/entities/auth_session.dart';
 import '../features/evaluation/evaluation.dart';
 import '../features/home/home.dart';
 import '../features/insight/insight.dart';
+import '../features/mushaf/mushaf.dart';
 import '../features/practice/practice.dart';
 import '../features/profile/profile.dart';
 import '../features/recording/recording.dart';
@@ -64,6 +65,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/home',
             builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/mushaf',
+            builder: (context, state) => const MushafScreen(),
           ),
           GoRoute(
             path: '/practice',

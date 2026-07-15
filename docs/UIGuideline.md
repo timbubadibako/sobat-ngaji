@@ -6,9 +6,13 @@ Referensi HTML prototype berada di folder `design/`. Implementasi Flutter harus 
 ## Main Navigation
 Bottom navigation final:
 - Home
+- Mushaf
 - Practice
 - Insight
 - Profile
+
+Practice is the center microphone action. Mushaf opens page-first Quran
+reading; surah/juz/page navigation belongs in a popup or bottom sheet.
 
 ## Home UI
 - Daily Qira sebagai centerpiece.
@@ -36,4 +40,3 @@ Bottom navigation final:
 - Hero radius 24.
 - Chip menggunakan pill radius.
 - Badge semantic mengikuti DesignGuideline.
-

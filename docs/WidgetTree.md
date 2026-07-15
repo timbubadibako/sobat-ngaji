@@ -1,8 +1,10 @@
 # Widget Tree
 
-Widget tree ini menjadi panduan implementasi Flutter. Tujuannya agar agent membangun dari struktur yang konsisten, bukan menebak layout ulang tiap screen.
+Widget tree ini menjadi panduan implementasi Flutter. Tujuannya agar agent
+membangun dari struktur yang konsisten, bukan menebak layout ulang tiap screen.
 
 ## App
+
 ```text
 SobatNgajiApp
 ↓
@@ -16,15 +18,22 @@ AppShell
 ```
 
 ## App Shell
+
 ```text
 AppShell
 ↓
 Scaffold
 ├── IndexedStack / StatefulShellRoute body
 └── BottomNav
+    ├── Home
+    ├── Mushaf
+    ├── Practice center mic action
+    ├── Insight
+    └── Profile
 ```
 
 ## HomeScreen
+
 ```text
 HomeScreen
 ↓
@@ -36,7 +45,20 @@ AppScaffold
 └── ContinuePracticeCard
 ```
 
+## MushafScreen
+
+```text
+MushafScreen
+↓
+AquaScreenScaffold
+├── ScreenHeader
+├── QuranPageSurface
+├── PageNavigationActions
+└── MushafNavigationSheet
+```
+
 ## PracticeScreen
+
 ```text
 PracticeScreen
 ↓
@@ -50,6 +72,7 @@ AppScaffold
 ```
 
 ## RecordingScreen
+
 ```text
 RecordingScreen
 ↓
@@ -66,6 +89,7 @@ AppScaffold
 ```
 
 ## EvaluationScreen
+
 ```text
 EvaluationScreen
 ↓
@@ -81,6 +105,7 @@ AppScaffold
 ```
 
 ## InsightScreen
+
 ```text
 InsightScreen
 ↓
@@ -95,6 +120,7 @@ AppScaffold
 ```
 
 ## ProfileScreen
+
 ```text
 ProfileScreen
 ↓
@@ -107,8 +133,8 @@ AppScaffold
 ```
 
 ## Widget Ownership Rule
+
 - Screen hanya menyusun komponen.
 - Controller mengatur state.
 - Repository mengambil data.
 - Service menangani detail teknis.
-

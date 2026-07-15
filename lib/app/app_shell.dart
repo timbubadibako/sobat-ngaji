@@ -20,7 +20,7 @@ class AppShell extends StatelessWidget {
       ),
       extendBody: true,
       bottomNavigationBar: SizedBox(
-        height: 74,
+        height: 104,
         child: _FloatingPillNav(
           selectedIndex: selectedIndex,
           onSelected: (index) => context.go(_routes[index]),
@@ -33,15 +33,15 @@ class AppShell extends StatelessWidget {
     final location = GoRouterState.of(context).uri.path;
     if (location.startsWith('/recording') ||
         location.startsWith('/evaluation')) {
-      return 1;
+      return 2;
     }
+
     final index = _routes.indexWhere(location.startsWith);
     return index < 0 ? 0 : index;
   }
 }
 
-const _routes = ['/home', '/practice', '/insight', '/profile'];
-
+const _routes = ['/home', '/mushaf', '/practice', '/insight', '/profile'];
 const _horizontalSwipeMinDistance = 72.0;
 const _horizontalSwipeMinVelocity = 360.0;
 
@@ -77,11 +77,8 @@ class _SwipeTabBodyState extends State<_SwipeTabBody> {
       },
       onHorizontalDragEnd: (details) {
         final velocity = details.primaryVelocity ?? 0;
-        final shouldMove =
-            _dragDistance.abs() >= _horizontalSwipeMinDistance ||
-            velocity.abs() >= _horizontalSwipeMinVelocity;
-
-        if (!shouldMove) {
+        if (_dragDistance.abs() < _horizontalSwipeMinDistance &&
+            velocity.abs() < _horizontalSwipeMinVelocity) {
           return;
         }
 
@@ -112,9 +109,15 @@ const _items = [
     selectedIcon: Icons.home_rounded,
   ),
   _NavItem(
+    label: 'Mushaf',
+    icon: Icons.menu_book_outlined,
+    selectedIcon: Icons.menu_book_rounded,
+  ),
+  _NavItem(
     label: 'Practice',
-    icon: Icons.mic_none_outlined,
+    icon: Icons.mic_none_rounded,
     selectedIcon: Icons.mic_rounded,
+    centerAction: true,
   ),
   _NavItem(
     label: 'Insight',
@@ -152,27 +155,34 @@ class _FloatingPillNav extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 430),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: AppColors.surfaceElevated,
+              color: AppColors.navy.withValues(alpha: 0.96),
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(color: AppColors.line),
+              border: Border.all(color: AppColors.cyan.withValues(alpha: 0.18)),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.ink.withValues(alpha: 0.14),
-                  blurRadius: 28,
-                  offset: const Offset(0, 12),
+                  color: AppColors.ink.withValues(alpha: 0.26),
+                  blurRadius: 34,
+                  offset: const Offset(0, 18),
                 ),
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.xs),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xs,
+                AppSpacing.xs,
+                AppSpacing.xs,
+                AppSpacing.xs,
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   for (var index = 0; index < _items.length; index++)
-                    _AnimatedPillNavItem(
-                      item: _items[index],
-                      selected: selectedIndex == index,
-                      onTap: () => onSelected(index),
+                    Expanded(
+                      child: _AnimatedPillNavItem(
+                        item: _items[index],
+                        selected: selectedIndex == index,
+                        onTap: () => onSelected(index),
+                      ),
                     ),
                 ],
               ),
@@ -197,66 +207,129 @@ class _AnimatedPillNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (item.centerAction) {
+      return _CenterNavItem(item: item, selected: selected, onTap: onTap);
+    }
+
+    final theme = Theme.of(context);
+    final color = selected ? AppColors.surfaceElevated : AppColors.muted;
+
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: item.label,
+      child: Tooltip(
+        message: item.label,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          child: SizedBox(
+            height: 58,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  selected ? item.selectedIcon : item.icon,
+                  size: 20,
+                  color: color,
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  item.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: color,
+                    fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
+                    fontSize: 10.5,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CenterNavItem extends StatelessWidget {
+  const _CenterNavItem({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _NavItem item;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
-    final duration = reduceMotion
-        ? Duration.zero
-        : const Duration(milliseconds: 360);
+    final duration = reduceMotion ? Duration.zero : AppMotion.normal;
     final theme = Theme.of(context);
 
     return Semantics(
       button: true,
       selected: selected,
       label: item.label,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Tooltip(
-          message: item.label,
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: AnimatedContainer(
-              duration: duration,
-              curve: Curves.easeInOutCubic,
-              width: selected ? 108 : 44,
-              height: 42,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-              decoration: BoxDecoration(
-                color: selected ? AppColors.navy : Colors.transparent,
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    selected ? item.selectedIcon : item.icon,
-                    size: 19,
-                    color: selected
-                        ? AppColors.surfaceElevated
-                        : AppColors.muted,
-                  ),
-                  if (selected) ...[
-                    const SizedBox(width: AppSpacing.xxs),
-                    Flexible(
-                      child: AnimatedOpacity(
-                        duration: duration,
-                        curve: Curves.easeInOutCubic,
-                        opacity: selected ? 1 : 0,
-                        child: Text(
-                          item.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: AppColors.surfaceElevated,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
+      child: Tooltip(
+        message: item.label,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          child: SizedBox(
+            height: 76,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AnimatedContainer(
+                  duration: duration,
+                  curve: Curves.easeInOutCubic,
+                  width: 58,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xFF7C4DFF), AppColors.aqua],
                     ),
-                  ],
-                ],
-              ),
+                    border: Border.all(
+                      color: AppColors.surfaceElevated,
+                      width: selected ? 4 : 3,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.aqua.withValues(alpha: 0.36),
+                        blurRadius: selected ? 24 : 18,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    selected ? item.selectedIcon : item.icon,
+                    color: AppColors.surfaceElevated,
+                    size: 25,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  item.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: selected ? AppColors.aqua : AppColors.muted,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 10.5,
+                    height: 1.05,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -270,9 +343,11 @@ class _NavItem {
     required this.label,
     required this.icon,
     required this.selectedIcon,
+    this.centerAction = false,
   });
 
   final String label;
   final IconData icon;
   final IconData selectedIcon;
+  final bool centerAction;
 }
